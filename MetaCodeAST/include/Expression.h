@@ -92,4 +92,12 @@ public:
    virtual std::string GetSymbol() { return "*"; }
 };
 
+class Substraction : public BinaryOperation {
+public:
+   Substraction(Expression* leftExpr, Expression* rightExpr) 
+      : BinaryOperation(leftExpr,rightExpr) {}
+
+   virtual std::string GetSymbol() { return "-"; }
+};
+
 #endif
