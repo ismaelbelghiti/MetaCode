@@ -1,1 +1,3 @@
-MetaCodeAST defines the AST of the MetaCodeLang and provides low-level construction of AST.
+MetaCodeAST provides low-level constructions of ASTs from wich the real codes (in C/C++/...) will be generated.
+
+
