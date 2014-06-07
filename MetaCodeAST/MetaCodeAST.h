@@ -3,6 +3,7 @@
 
 #include "include/indentation_space.h"
 #include "include/CodeNode.h"
-#include "include/variable.h"
+#include "include/Variable.h"
+#include "include/Expression.h"
 
 #endif

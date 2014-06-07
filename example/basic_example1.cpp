@@ -2,8 +2,9 @@
 
 int main()
 {
-   CodeNode* codeNode = new Variable("myVariable");
-   codeNode->PrintDebug();
-   cout << endl;
+   Variable* v = new Variable("myVariable");
+   CodeNode* e = new ExprFromVariable(v);
+   e->PrintDebug();
+   std::cout << std::endl;
    return 0;
 }
