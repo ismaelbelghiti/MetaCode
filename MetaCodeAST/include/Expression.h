@@ -3,13 +3,18 @@
 
 #include "Variable.h"
 
-class Expression : public CodeNode {};
+class Expression : public CodeNode {
+public:
+   virtual Type* GetType() = 0;
+};
 
 class ExprFromInt : public Expression {
 public:
    ExprFromInt(int value) { m_value = value; }
 
    virtual int GetValue() { return m_value; }
+
+   virtual Type* GetType() { return cInt; }
 
    virtual void PrintDebug(int level = 0) {
       printIndent(level);
@@ -25,6 +30,8 @@ public:
    ExprFromBool(int value) { m_value = value; }
 
    virtual bool GetValue() { return m_value; }
+
+   virtual Type* GetType() { return cBool; }
 
    virtual void PrintDebug(int level = 0) {
       printIndent(level);
@@ -42,6 +49,8 @@ public:
    ExprFromVariable(Variable* variable) { m_variable = variable; }
 
    Variable* GetVariable() { return m_variable; }
+
+   virtual Type* GetType() { return GetVariable()->GetType(); }
 
    virtual void PrintDebug(int level = 0) {
       printIndent(level);
@@ -70,6 +79,8 @@ class ParenthesizedExpr : public UnaryOperation {
 public:
    ParenthesizedExpr(Expression* expr) : UnaryOperation(expr) { }
 
+   virtual Type* GetType() { return GetExpression()->GetType(); }
+
    virtual void PrintDebug(int level = 0) {
       printIndent(level);
       std::cout << "(";
@@ -85,6 +96,8 @@ class Minus : public UnaryOperation {
 public:
    Minus(Expression* expr) : UnaryOperation(expr) {}
 
+   virtual Type* GetType() { return GetExpression()->GetType(); }
+
    virtual void PrintDebug(int level = 0) {
       printIndent(level);
       std::cout << "-";
@@ -95,6 +108,8 @@ public:
 class Negation : public UnaryOperation {
 public:
    Negation(Expression* expr) : UnaryOperation(expr) {}
+
+   virtual Type* GetType() { return cBool; }
 
    virtual void PrintDebug(int level = 0) {
       printIndent(level);
@@ -136,6 +151,8 @@ public:
    Addition(Expression* leftExpr, Expression* rightExpr) 
       : BinaryOperation(leftExpr,rightExpr) {}
    
+   virtual Type* GetType() { return GetLeftExpr()->GetType(); }
+
    virtual std::string GetSymbol() { return "+"; }
 };
 
@@ -143,6 +160,8 @@ class Multiplication : public BinaryOperation {
 public:
    Multiplication(Expression* leftExpr, Expression* rightExpr) 
       : BinaryOperation(leftExpr,rightExpr) {}
+
+   virtual Type* GetType() { return GetLeftExpr()->GetType(); }
 
    virtual std::string GetSymbol() { return "*"; }
 };
@@ -152,6 +171,8 @@ public:
    Substraction(Expression* leftExpr, Expression* rightExpr) 
       : BinaryOperation(leftExpr,rightExpr) {}
 
+   virtual Type* GetType() { return GetLeftExpr()->GetType(); }
+
    virtual std::string GetSymbol() { return "-"; }
 };
 
@@ -159,6 +180,8 @@ class EuclidianDivision : public BinaryOperation {
 public:
    EuclidianDivision(Expression* leftExpr, Expression* rightExpr) 
       : BinaryOperation(leftExpr,rightExpr) {}
+
+   virtual Type* GetType() { return cInt; }
 
    virtual std::string GetSymbol() { return "/"; }
 };
@@ -169,6 +192,8 @@ public:
    Modulus(Expression* leftExpr, Expression* rightExpr) 
       : BinaryOperation(leftExpr,rightExpr) {}
 
+   virtual Type* GetType() { return cInt; }
+
    virtual std::string GetSymbol() { return "%"; }
 };
 
@@ -177,14 +202,17 @@ public:
    And(Expression* leftExpr, Expression* rightExpr) 
       : BinaryOperation(leftExpr,rightExpr) {}
 
+   virtual Type* GetType() { return cBool; }
+
    virtual std::string GetSymbol() { return "&&"; }
 };
-
 
 class Or : public BinaryOperation {
 public:
    Or(Expression* leftExpr, Expression* rightExpr) 
       : BinaryOperation(leftExpr,rightExpr) {}
+
+   virtual Type* GetType() { return cBool; }
 
    virtual std::string GetSymbol() { return "||"; }
 };
