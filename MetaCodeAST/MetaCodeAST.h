@@ -6,9 +6,11 @@
 #include "include/Bloc.h"
 #include "include/Variable.h"
 #include "include/Expression.h"
+#include "include/Declaration.h"
 #include "include/While.h"
 #include "include/For.h"
 #include "include/Conditional.h"
 #include "include/Print.h"
+
 
 #endif

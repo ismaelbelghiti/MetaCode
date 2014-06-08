@@ -35,13 +35,12 @@ int main() {
    Print* print = create_print(
       Print::ENDLINE,
       new PrintableFromString("Hello"),
-      new PrintableFromExpression(arithExpr),
-      new PrintableFromString("Bye")
+      new PrintableFromExpression(new ExprFromInt(42))
    );
 
    // creation of a bloc
    Bloc* bloc = create_bloc(
-      new ExprFromInt(42),
+      new Declaration( new Variable("iLine"), arithExpr),
       print
    );
    
@@ -58,7 +57,14 @@ int main() {
       bloc
    );
 
-   whileLoop->PrintDebug();
+   // creation of an if statement
+   If* ifStatement = new If(
+      boolExpr,
+      bloc
+   );
+
+
+   ifStatement->PrintDebug();
    std::cout << std::endl;
 
 
