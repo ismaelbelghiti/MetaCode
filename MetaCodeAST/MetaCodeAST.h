@@ -13,6 +13,7 @@
 #include "include/Print.h"
 #include "include/IncludeLib.h"
 #include "include/Main.h"
+#include "include/Function.h"
 
 
 #endif

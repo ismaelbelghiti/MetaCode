@@ -19,7 +19,7 @@ public:
 
 private:
    std::string m_typeName;
-} *cInt = new Type("int"), *cBool = new Type("bool");
+} *cInt = new Type("int"), *cBool = new Type("bool"), *cVoid = new Type("void");
 
 class Variable : public CodeNode {
 public:
