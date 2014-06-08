@@ -2,6 +2,7 @@
 #define FOR_H
 
 #include "Expression.h"
+#include "Bloc.h"
 
 class Range : public CodeNode {
 public:
@@ -60,13 +61,19 @@ public:
       m_bloc = bloc;
    }
       
+   virtual Variable* GetVariable() { return m_variable; }
+
+   virtual Range* GetRange() { return m_range; }
+
+   virtual Bloc* GetBloc() { return m_bloc; }
+
    virtual void PrintDebug(int level = 0) {
       printIndent(level);
       std::cout << "For ";
-      m_variable->PrintDebug();
-      m_range->PrintDebug();
+      GetVariable()->PrintDebug();
+      GetRange()->PrintDebug();
       std::cout << std::endl;
-      m_bloc->PrintDebug(level);
+      GetBloc()->PrintDebug(level);
    }
 
 private:

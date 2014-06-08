@@ -1,7 +1,7 @@
 #include "../MetaCodeAST/MetaCodeAST.h"
+#include "utils.h"
 
 int main() {
-
    // an example of composed airthmetic expression
    Expression* arithExpr = new Multiplication(
       new ParenthesizedExpr(
@@ -32,21 +32,19 @@ int main() {
    );
 
    // creation of a print statement
-   const int nbPrintables = 3;
-   Printable** printable = new Printable*[nbPrintables];
-   printable[0] = new PrintableFromString("Hello");
-   printable[1] = new PrintableFromExpression(arithExpr);
-   printable[2] = new PrintableFromString("Bye");
-   Print* print = new Print(printable, nbPrintables, Print::ENDLINE);
+   Print* print = create_print(
+      Print::ENDLINE,
+      new PrintableFromString("Hello"),
+      new PrintableFromExpression(arithExpr),
+      new PrintableFromString("Bye")
+   );
 
    // creation of a bloc
-   const int nbNodesOfBloc = 3;
-   CodeNode** codeNodeOfBloc = new CodeNode*[nbNodesOfBloc];
-   codeNodeOfBloc[0] = new ExprFromInt(42);
-   codeNodeOfBloc[1] = print;
-   codeNodeOfBloc[2] = boolExpr;
-   Bloc* bloc = new Bloc(codeNodeOfBloc, nbNodesOfBloc);
-      
+   Bloc* bloc = create_bloc(
+      new ExprFromInt(42),
+      print
+   );
+   
    // creation of a for loop
    For* forLoop = new For(
       new Variable("iCow"),
@@ -54,7 +52,15 @@ int main() {
       bloc
    );
 
-   forLoop->PrintDebug();
+   // creation of a while loop
+   While* whileLoop = new While(
+      boolExpr,
+      bloc
+   );
+
+   whileLoop->PrintDebug();
    std::cout << std::endl;
+
+
    return 0;
 }
