@@ -1,7 +1,6 @@
 #include "../MetaCodeAST/MetaCodeAST.h"
 
-int main()
-{
+int main() {
 
    // an example of composed airthmetic expression
    Expression* arithExpr = new Multiplication(
@@ -14,7 +13,7 @@ int main()
       new ParenthesizedExpr(
 	 new Addition(
 	    new ExprFromVariable(new Variable("y")),
-	     new ExprFromInt(3)
+	    new ExprFromInt(3)
 	 )
       )
    );
@@ -32,11 +31,19 @@ int main()
       )
    );
 
+   // creation of a print statement
+   const int nbPrintables = 3;
+   Printable** printable = new Printable*[nbPrintables];
+   printable[0] = new PrintableFromString("Hello");
+   printable[1] = new PrintableFromExpression(arithExpr);
+   printable[2] = new PrintableFromString("Bye");
+   Print* print = new Print(printable, nbPrintables, Print::ENDLINE);
+
    // creation of a bloc
    const int nbNodesOfBloc = 3;
    CodeNode** codeNodeOfBloc = new CodeNode*[nbNodesOfBloc];
    codeNodeOfBloc[0] = new ExprFromInt(42);
-   codeNodeOfBloc[1] = arithExpr;
+   codeNodeOfBloc[1] = print;
    codeNodeOfBloc[2] = boolExpr;
    Bloc* bloc = new Bloc(codeNodeOfBloc, nbNodesOfBloc);
       

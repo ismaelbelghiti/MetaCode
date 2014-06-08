@@ -22,7 +22,7 @@ public:
 
    virtual void PrintDebug(int level = 0) {
       printIndent(level);
-      std::cout << GetString();
+      std::cout << "\""  << GetString() << "\"";
    }
 
 private:
@@ -47,9 +47,36 @@ private:
 
 class Print : public CodeNode {
 public:
-   Print(int nbArgs) {
-      
+   static const bool ENDLINE = true;
+   static const bool NO_ENDLINE = false;
+
+   Print(Printable** printable, int nbPrintables, bool withEndline = true) {
+      m_printable = printable;
+      m_nbPrintables = nbPrintables;
+      m_withEndline = withEndline;
    }
+
+   virtual int GetNbPrintables() { return m_nbPrintables; }
+
+   virtual Printable* GetPrintable(int iPrintable) { return m_printable[iPrintable]; }
+
+   virtual bool WithEndline() { return m_withEndline; }
+
+   virtual void PrintDebug(int level = 0) {
+      printIndent(level);
+      std::cout << "Print : ";
+      for(int iPrintable = 0; iPrintable < GetNbPrintables(); iPrintable++) {
+	 GetPrintable(iPrintable)->PrintDebug();
+	 std::cout << " ";
+      }	 
+      if(WithEndline())
+	 std::cout << "endline";
+   }
+
+private:
+   int m_nbPrintables;
+   Printable** m_printable;
+   bool m_withEndline;
 };
 
 
