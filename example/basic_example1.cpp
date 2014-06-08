@@ -2,8 +2,8 @@
 
 int main()
 {
-   // an example of composed expression
-   CodeNode* bigExpr = new Multiplication(
+   // an example of composed airthmetic expression
+   CodeNode* arithExpr = new Multiplication(
       new ParenthesizedExpr(
 	 new Substraction(
 	    new ExprFromVariable(new Variable("x")),
@@ -18,12 +18,25 @@ int main()
       )
    );
 
+   //an example of composed boolean expression
+   CodeNode* boolExpr = new And(
+      new ExprFromBool(true),
+      new Negation( 
+	 new ParenthesizedExpr(
+	    new Or(
+               new ExprFromVariable(new Variable("isPair")),
+	       new ExprFromBool(false)
+	    )
+	 )   
+      )
+   );
+
    // creation of a bloc
    const int nbNodesOfBloc = 3;
    CodeNode** codeNodeOfBloc = new CodeNode*[nbNodesOfBloc];
    codeNodeOfBloc[0] = new ExprFromInt(42);
-   codeNodeOfBloc[1] = bigExpr;
-   codeNodeOfBloc[2] = new ExprFromInt(43);
+   codeNodeOfBloc[1] = arithExpr;
+   codeNodeOfBloc[2] = boolExpr;
    Bloc* bloc = new Bloc(codeNodeOfBloc, nbNodesOfBloc);
       
    // creation of a for loop
