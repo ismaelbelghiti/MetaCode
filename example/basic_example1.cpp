@@ -2,8 +2,9 @@
 
 int main()
 {
+
    // an example of composed airthmetic expression
-   CodeNode* arithExpr = new Multiplication(
+   Expression* arithExpr = new Multiplication(
       new ParenthesizedExpr(
 	 new Substraction(
 	    new ExprFromVariable(new Variable("x")),
@@ -19,12 +20,12 @@ int main()
    );
 
    //an example of composed boolean expression
-   CodeNode* boolExpr = new And(
+   Expression* boolExpr = new And(
       new ExprFromBool(true),
       new Negation( 
 	 new ParenthesizedExpr(
 	    new Or(
-               new ExprFromVariable(new Variable("isPair")),
+               new ExprFromVariable(new Variable("isPair",cBool)),
 	       new ExprFromBool(false)
 	    )
 	 )   

@@ -7,5 +7,6 @@
 #include "include/Variable.h"
 #include "include/Expression.h"
 #include "include/For.h"
+#include "include/Print.h"
 
 #endif
