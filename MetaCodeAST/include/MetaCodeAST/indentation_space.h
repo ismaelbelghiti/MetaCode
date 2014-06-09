@@ -1,5 +1,5 @@
-#ifndef INDENTATION_SPACE
-#define INDENTATION_SPACE
+#ifndef INDENTATION_SPACE_H
+#define INDENTATION_SPACE_H
 
 #include <iostream>
 

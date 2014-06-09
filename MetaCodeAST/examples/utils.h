@@ -1,7 +1,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include "../MetaCodeAST/MetaCodeAST.h"
+#include "MetaCodeAST.h"
 
 int count_args() { return 0; }
 

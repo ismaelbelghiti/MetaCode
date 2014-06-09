@@ -1,4 +1,4 @@
-#include "../MetaCodeAST/MetaCodeAST.h"
+#include "MetaCodeAST.h"
 #include "utils.h"
 
 int main() {
