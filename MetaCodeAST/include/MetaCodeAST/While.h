@@ -6,22 +6,13 @@
 
 class While : public CodeNode {
 public:
-   While(Expression *condExpr, Bloc* bloc) {
-      m_condExpr = condExpr;
-      m_bloc = bloc;
-   }
+   While(Expression *condExpr, Bloc* bloc);
 
-   virtual Expression* GetCondition() { return m_condExpr; }
+   virtual Expression* GetCondition();
 
-   virtual Bloc* GetBloc() { return m_bloc; }
+   virtual Bloc* GetBloc();
 
-   virtual void PrintDebug(int level = 0) {
-      printIndent(level);
-      std::cout << "While ";
-      GetCondition()->PrintDebug();
-      std::cout << std::endl;
-      GetBloc()->PrintDebug(level);
-   }
+   virtual void PrintDebug(int level = 0);
 
 private:
    Expression *m_condExpr;
