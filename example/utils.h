@@ -33,6 +33,13 @@ Print* create_print(bool withEndline, Args... args) {
    return new Print(printable, nb, withEndline);
 }
 
+template<typename ...Args>
+Signature* create_signature(Args... args) {
+   int nb = count_args(args...);
+   Variable** variable = new Variable*[nb];
+   fill_array_from_args(variable, args...);
+   return new Signature(variable, nb);
+}
 
 
 #endif

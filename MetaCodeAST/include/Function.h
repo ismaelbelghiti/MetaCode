@@ -25,20 +25,45 @@ private:
   std::string m_name;
 };
 
-class FunctionDeclaration : public CodeNode {
+class Signature : public CodeNode {
 public:
-   FunctionDeclaration(Function* func, Variable** arg, int nbArgs,  Bloc* bloc) {
-      m_func = func;
+   Signature(Variable** arg, int nbArgs) {
       m_arg = arg;
       m_nbArgs = nbArgs;
+   }
+
+   virtual int GetNbArgs() { return m_nbArgs; }
+
+   virtual Variable* GetArg(int iArg) { return m_arg[iArg]; }
+   
+   virtual void PrintDebug(int level = 0)
+   {
+      printIndent(level);
+      for(int iArg = 0; iArg < GetNbArgs(); iArg++) {
+	 GetArg(iArg)->GetType()->PrintDebug();
+	 std::cout << " ";
+	 GetArg(iArg)->PrintDebug();
+	 if(iArg < GetNbArgs()-1)
+	    std::cout << ",";
+      }
+   }
+
+private:
+   Variable** m_arg;
+   int m_nbArgs;
+};
+
+class FunctionDeclaration : public CodeNode {
+public:
+   FunctionDeclaration(Function* func, Signature* signature,  Bloc* bloc) {
+      m_func = func;
+      m_signature = signature;
       m_bloc = bloc;
    }
 
    virtual Function* GetFunction() { return m_func; }
 
-   virtual int GetNbArgs() { return m_nbArgs; }
-
-   virtual Variable* GetArg(int iArg) { return m_arg[iArg]; }
+   virtual Signature* GetSignature() { return m_signature; }
 
    virtual Bloc* GetBloc() { return m_bloc; }
 
@@ -47,21 +72,14 @@ public:
       std::cout << "Function ";
       GetFunction()->PrintDebug();
       std::cout << " (";
-      for(int iArg = 0; iArg < GetNbArgs(); iArg++) {
-	 GetArg(iArg)->GetType()->PrintDebug();
-	 std::cout << " ";
-	 GetArg(iArg)->PrintDebug();
-	 if(iArg < GetNbArgs()-1)
-	    std::cout << ",";
-      }
+      GetSignature()->PrintDebug();
       std::cout << ")";
    }
 
 private:
    Function *m_func;
-   Variable** m_arg;
-   int m_nbArgs;
-   Bloc* m_bloc;
+   Signature *m_signature;
+   Bloc *m_bloc;
 };
 
 //class FunctionCall

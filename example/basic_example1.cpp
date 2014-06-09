@@ -63,6 +63,8 @@ int main() {
       bloc
    );
 
+   // creation of a function declaration
+   
 
    ifStatement->PrintDebug();
    std::cout << std::endl;
