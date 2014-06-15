@@ -6,22 +6,13 @@
 
 class If : public CodeNode {
 public:
-   If(Expression *condExpr, Bloc* bloc) {
-      m_condExpr = condExpr;
-      m_bloc = bloc;
-   }
+   If(Expression *condExpr, Bloc* bloc);
 
-   virtual Expression* GetCondition() { return m_condExpr; }
+   virtual Expression* GetCondition();
 
-   virtual Bloc* GetBloc() { return m_bloc; }
+   virtual Bloc* GetBloc();
 
-   virtual void PrintDebug(int level = 0) {
-      printIndent(level);
-      std::cout << "If ";
-      GetCondition()->PrintDebug();
-      std::cout << std::endl;
-      GetBloc()->PrintDebug(level);
-   }
+   virtual void PrintDebug(int level = 0);
 
 private:
    Expression *m_condExpr;
@@ -31,22 +22,13 @@ private:
 
 class ElseIf : public CodeNode {
 public:
-   ElseIf(Expression *condExpr, Bloc* bloc) {
-      m_condExpr = condExpr;
-      m_bloc = bloc;
-   }
+   ElseIf(Expression *condExpr, Bloc* bloc);
 
-   virtual Expression* GetCondition() { return m_condExpr; }
+   virtual Expression* GetCondition();
 
-   virtual Bloc* GetBloc() { return m_bloc; }
+   virtual Bloc* GetBloc();
 
-   virtual void PrintDebug(int level = 0) {
-      printIndent(level);
-      std::cout << "ElseIf ";
-      GetCondition()->PrintDebug();
-      std::cout << std::endl;
-      GetBloc()->PrintDebug(level);
-   }
+   virtual void PrintDebug(int level = 0);
 
 private:
    Expression *m_condExpr;
@@ -56,15 +38,11 @@ private:
 
 class Else : public CodeNode {
 public:
-   Else(Bloc* bloc) {}
+   Else(Bloc* bloc);
 
-   virtual Bloc* GetBloc() { return m_bloc; }
+   virtual Bloc* GetBloc();
 
-   virtual void PrintDebug(int level = 0) {
-      printIndent(level);
-      std::cout << "Else " << std::endl;
-      GetBloc()->PrintDebug(level);
-   }
+   virtual void PrintDebug(int level = 0);
 
 private:
    Expression *m_condExpr;
