@@ -5,9 +5,9 @@
 
 class IncludeLib : public CodeNode {
 public:
-   IncludeLib(std::string name) { m_name = name; }
+   IncludeLib(std::string name);
 
-   std::string GetName() { return m_name; }
+   virtual std::string GetName(); 
 
 private:
    std::string m_name;
