@@ -1,4 +1,5 @@
 #include "MetaCodeAST/Expression.h"
+#include "MetaCodeAST/AbstractVisitor.h"
 
 ExprFromInt::ExprFromInt(int value) {
    m_value = value;
@@ -15,6 +16,10 @@ Type* ExprFromInt::GetType() {
 void ExprFromInt::PrintDebug(int level) {
    printIndent(level);
    std::cout << GetValue();
+}
+
+void ExprFromInt::Visit(AbstractVisitor* visitor) {
+   visitor->VisitExprFromInt(this);
 }
 
 
@@ -38,6 +43,9 @@ void ExprFromBool::PrintDebug(int level) {
       std::cout << "False";
 }
 
+void ExprFromBool::Visit(AbstractVisitor* visitor) {
+   visitor->VisitExprFromBool(this);
+}
 
 
 ExprFromVariable::ExprFromVariable(Variable* variable) {
@@ -57,6 +65,9 @@ void ExprFromVariable::PrintDebug(int level) {
    GetVariable()->PrintDebug();
 }
 
+void ExprFromVariable::Visit(AbstractVisitor* visitor) {
+   visitor->VisitExprFromVariable(this);
+}
 
 /////////////////////
 // Unary Operation //
@@ -85,6 +96,10 @@ void ParenthesizedExpr::PrintDebug(int level) {
    std::cout << ")";
 }
 
+void ParenthesizedExpr::Visit(AbstractVisitor* visitor) {
+   visitor->VisitParenthesizedExpr(this);
+}
+
 
 Minus::Minus(Expression* expr) : UnaryOperation(expr) {}
 
@@ -98,7 +113,11 @@ void Minus::PrintDebug(int level) {
    GetExpression()->PrintDebug();
 }
 
+void Minus::Visit(AbstractVisitor* visitor) {
+   visitor->VisitMinus(this);
+}
    
+
 Negation::Negation(Expression* expr) : UnaryOperation(expr) {}
 
 Type* Negation::GetType() {
@@ -111,6 +130,10 @@ void Negation::PrintDebug(int level) {
    GetExpression()->PrintDebug();
 }
 
+void Negation::Visit(AbstractVisitor* visitor) {
+   visitor->VisitNegation(this);
+}
+  
 
 //////////////////////
 // Binary Operation //
@@ -136,6 +159,10 @@ void BinaryOperation::PrintDebug(int level) {
    GetRightExpr()->PrintDebug();
 }
 
+void BinaryOperation::Visit(AbstractVisitor* visitor) {
+   visitor->VisitBinaryOperation(this);
+}
+  
 
 Addition::Addition(Expression* leftExpr, Expression* rightExpr) 
    : BinaryOperation(leftExpr,rightExpr) {}

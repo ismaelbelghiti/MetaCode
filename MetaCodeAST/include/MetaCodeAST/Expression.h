@@ -3,9 +3,13 @@
 
 #include "Variable.h"
 
+class AbstractVisitor;
+
 class Expression : public CodeNode {
 public:
    virtual Type* GetType() = 0;
+
+   virtual void Visit(AbstractVisitor* visitor)  = 0;
 };
 
 class ExprFromInt : public Expression {
@@ -17,6 +21,8 @@ public:
    virtual Type* GetType();
 
    virtual void PrintDebug(int level = 0);
+
+   virtual void Visit(AbstractVisitor* visitor);
 
 private:
    int m_value;
@@ -32,6 +38,8 @@ public:
 
    virtual void PrintDebug(int level = 0);
 
+   virtual void Visit(AbstractVisitor* visitor);
+
 private:
    bool m_value;
 };
@@ -45,6 +53,8 @@ public:
    virtual Type* GetType();
 
    virtual void PrintDebug(int level = 0);
+
+   virtual void Visit(AbstractVisitor* visitor);
 
 private:
    Variable* m_variable;
@@ -72,6 +82,8 @@ public:
 
    virtual void PrintDebug(int level = 0);
 
+   virtual void Visit(AbstractVisitor* visitor);
+
 private:
    Expression* m_expr;
 };
@@ -83,6 +95,8 @@ public:
    virtual Type* GetType();
 
    virtual void PrintDebug(int level = 0);
+
+   virtual void Visit(AbstractVisitor* visitor);
 };
 
 class Negation : public UnaryOperation {
@@ -92,6 +106,8 @@ public:
    virtual Type* GetType();
 
    virtual void PrintDebug(int level = 0);
+
+   virtual void Visit(AbstractVisitor* visitor);
 };
 
 //////////////////////
@@ -110,6 +126,7 @@ public:
 
    virtual void PrintDebug(int level = 0);
 
+   virtual void Visit(AbstractVisitor* visitor);
 private:
    Expression *m_leftExpr, *m_rightExpr;
 };
