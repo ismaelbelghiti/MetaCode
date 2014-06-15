@@ -12,41 +12,19 @@ public:
    // You have to specify an excluded end since Python can only deal with excluded end. 
    // When an includedEnd is specified, it is prefered to the excluded one in languages 
    // like C++/Java/...
-   Range(bool isIncreasing, Expression* start, Expression* excludedEnd, Expression* includedEnd = 0) {
-      m_isIncreasing = isIncreasing;
-      m_start = start;
-      m_excludedEnd = excludedEnd;
-      m_includedEnd = includedEnd;
-   }
+   Range(bool isIncreasing, Expression* start, Expression* excludedEnd, Expression* includedEnd = 0);
 
-   virtual bool IsIncreasing() { return m_isIncreasing; }
+   virtual bool IsIncreasing();
 
-   virtual Expression* GetStart() { return m_start;}
+   virtual Expression* GetStart();
 
-   virtual Expression* GetExcludedEnd() { return m_excludedEnd; }
+   virtual Expression* GetExcludedEnd();
 
-   virtual bool IncludedEndIsDefined() { return m_includedEnd != 0; }
+   virtual bool IncludedEndIsDefined();
 
-   virtual Expression* GetIncludedEnd() { return m_includedEnd; }
+   virtual Expression* GetIncludedEnd();
 
-   virtual void PrintDebug(int level = 0) {
-      printIndent(level);
-      std::cout << " from ";
-      GetStart()->PrintDebug();
-      if(IsIncreasing())
-	 std::cout << " up to ";
-      else
-	 std::cout << " down to ";
-      if(IncludedEndIsDefined()){
-	 GetIncludedEnd()->PrintDebug();
-	 std::cout << " included ";
-      }
-      else {
-	 GetExcludedEnd()->PrintDebug();
-	 std::cout << " excluded ";
-      }
-	 
-   }
+   virtual void PrintDebug(int level = 0);
 
 private:
    bool m_isIncreasing;
@@ -55,26 +33,15 @@ private:
 
 class For : public CodeNode {
 public:
-   For(Variable* variable, Range* range, Bloc* bloc) {
-      m_variable = variable;
-      m_range = range;
-      m_bloc = bloc;
-   }
+   For(Variable* variable, Range* range, Bloc* bloc);
       
-   virtual Variable* GetVariable() { return m_variable; }
+   virtual Variable* GetVariable();
 
-   virtual Range* GetRange() { return m_range; }
+   virtual Range* GetRange();
 
-   virtual Bloc* GetBloc() { return m_bloc; }
+   virtual Bloc* GetBloc();
 
-   virtual void PrintDebug(int level = 0) {
-      printIndent(level);
-      std::cout << "For ";
-      GetVariable()->PrintDebug();
-      GetRange()->PrintDebug();
-      std::cout << std::endl;
-      GetBloc()->PrintDebug(level);
-   }
+   virtual void PrintDebug(int level = 0);
 
 private:
    Variable* m_variable;
