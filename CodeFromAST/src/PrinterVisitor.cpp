@@ -33,6 +33,6 @@ void PrinterVisitor::VisitNegation(Negation* negation) {
 
 void PrinterVisitor::VisitBinaryOperation(BinaryOperation* binaryOp) {
    binaryOp->GetLeftExpr()->Visit(this);
-   std::cout << binaryOp->GetSymbol();
+   std::cout << " " << binaryOp->GetSymbol() << " ";
    binaryOp->GetRightExpr()->Visit(this);
 }
