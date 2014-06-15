@@ -29,6 +29,4 @@ private:
    int m_nbCodeNodes;
 };
 
-
-
 #endif

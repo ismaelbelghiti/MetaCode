@@ -6,36 +6,32 @@
 
 class Type : public CodeNode {
 public:
-   Type(std::string typeName) { m_typeName = typeName; }
+   Type(std::string typeName);
 
-   virtual std::string GetName() { return m_typeName; }
+   virtual std::string GetName();
 
-   virtual bool isEqual(Type* otherType) { return GetName() == otherType->GetName(); }
+   virtual bool isEqual(Type* otherType);
 
-   virtual void PrintDebug(int level = 0) {
-      printIndent(level);
-      std::cout << GetName();
-   }
+   virtual void PrintDebug(int level = 0);
 
 private:
    std::string m_typeName;
-} *cInt = new Type("int"), *cBool = new Type("bool"), *cVoid = new Type("void");
+};
+
+extern Type *cInt;
+extern Type *cBool;
+extern Type *cVoid;
+
 
 class Variable : public CodeNode {
 public:
-   Variable(std::string name, Type* type = cInt) { 
-      m_name = name;
-      m_type = type;
-   }
+   Variable(std::string name, Type* type = cInt);
 
-   virtual std::string GetName() { return m_name; }
+   virtual std::string GetName();
 
-   virtual Type* GetType() { return m_type; }
+   virtual Type* GetType();
 
-   virtual void PrintDebug(int level = 0) {
-      printIndent(level);
-      std::cout << GetName();
-   }
+   virtual void PrintDebug(int level = 0);
 
 private:
    std::string m_name;
