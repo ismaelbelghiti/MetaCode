@@ -2,18 +2,15 @@
 #define MAIN_H
 
 #include "CodeNode.h"
+#include "Bloc.h"
 
 class Main : public CodeNode {
 public:
-   Main(Bloc* bloc) {}
+   Main(Bloc* bloc);
 
-   virtual Bloc* GetBloc() { return m_bloc; }
+   virtual Bloc* GetBloc();
 
-   virtual void PrintDebug(int level = 0) {
-      printIndent(level);
-      std::cout << "Main " << std::endl;
-      GetBloc()->PrintDebug(level);
-   }
+   virtual void PrintDebug(int level = 0);
 
 private:
    Bloc* m_bloc;
