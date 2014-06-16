@@ -3,7 +3,7 @@
 
 #include "MetaCodeAST/AbstractVisitor.h"
 
-class PrinterVisitor : public AbstractVisitor {
+class PseudoCodePrinterVisitor : public AbstractVisitor {
 public:
    virtual void VisitExprFromInt(ExprFromInt* exprFromInt);
 

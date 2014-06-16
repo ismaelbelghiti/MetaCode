@@ -1,67 +1,67 @@
-#include "CodeFromAST/PrinterVisitor.h"
+#include "CodeFromAST/PseudoCodePrinterVisitor.h"
 
-void PrinterVisitor::VisitExprFromInt(ExprFromInt* exprFromInt) {
+void PseudoCodePrinterVisitor::VisitExprFromInt(ExprFromInt* exprFromInt) {
    std::cout << exprFromInt->GetValue();
 }
 
-void PrinterVisitor::VisitExprFromBool(ExprFromBool* exprFromBool) {
+void PseudoCodePrinterVisitor::VisitExprFromBool(ExprFromBool* exprFromBool) {
    if(exprFromBool->GetValue())
       std::cout << "Vrai";
    else
       std::cout << "Faux";
 }
 
-void PrinterVisitor::VisitExprFromVariable(ExprFromVariable* exprFromVariable) {
+void PseudoCodePrinterVisitor::VisitExprFromVariable(ExprFromVariable* exprFromVariable) {
    std::cout << exprFromVariable->GetVariable()->GetName();
 }
 
-void PrinterVisitor::VisitParenthesizedExpr(ParenthesizedExpr* parenthesizedExpr) {
+void PseudoCodePrinterVisitor::VisitParenthesizedExpr(ParenthesizedExpr* parenthesizedExpr) {
    std::cout << "(";
    parenthesizedExpr->GetExpression()->Visit(this);
    std::cout << ")";
 }
 
-void PrinterVisitor::VisitMinus(Minus* minus) {
+void PseudoCodePrinterVisitor::VisitMinus(Minus* minus) {
    std::cout << "-";
    minus->GetExpression()->Visit(this);
 }
 
-void PrinterVisitor::VisitNegation(Negation* negation) {
+void PseudoCodePrinterVisitor::VisitNegation(Negation* negation) {
    std::cout << "!";
    negation->GetExpression()->Visit(this);
 }
 
-void PrinterVisitor::VisitBinaryOperation(BinaryOperation* binaryOp) {
+void PseudoCodePrinterVisitor::VisitBinaryOperation(BinaryOperation* binaryOp) {
    binaryOp->GetLeftExpr()->Visit(this);
    std::cout << " " << binaryOp->GetSymbol() << " ";
    binaryOp->GetRightExpr()->Visit(this);
 }
 
-void PrinterVisitor::VisitBloc(Bloc* bloc) {
+void PseudoCodePrinterVisitor::VisitBloc(Bloc* bloc) {
    for(int iCodeNode = 0; iCodeNode < bloc->GetNbCodeNodes(); iCodeNode++) {
       bloc->GetCodeNode(iCodeNode)->Visit(this);
       std::cout << std::endl;
    }
 }
 
-void PrinterVisitor::VisitIf(If * ifNode) {
+void PseudoCodePrinterVisitor::VisitIf(If * ifNode) {
    std::cout << "Si ";
    ifNode->GetCondition()->Visit(this);
    std::cout << std::endl;
 }
 
-void PrinterVisitor::VisitElseIf(ElseIf * elseIfNode)  {
+void PseudoCodePrinterVisitor::VisitElseIf(ElseIf * elseIfNode)  {
    std::cout << "Sinon si ";
    elseIfNode->GetCondition()->Visit(this);
    std::cout << std::endl;
 }
 
-void PrinterVisitor::VisitElse(Else * elseNode) {
+void PseudoCodePrinterVisitor::VisitElse(Else * elseNode) {
    std::cout << "Sinon " << std::endl;
    elseNode->GetBloc()->Visit(this);
 }
 
-void PrinterVisitor::VisitDeclaration(Declaration * decl) {
+void PseudoCodePrinterVisitor::VisitDeclaration(Declaration * decl) {
    decl->GetVariable()->GetType()->Visit(this);
    std::cout << " ";
    decl->GetVariable()->Visit(this);
@@ -70,7 +70,7 @@ void PrinterVisitor::VisitDeclaration(Declaration * decl) {
    std::cout << std::endl;
 }
 
-void PrinterVisitor::VisitRange(Range * range) {
+void PseudoCodePrinterVisitor::VisitRange(Range * range) {
    std::cout << " partant de ";
    range->GetStart()->Visit(this);
    if(range->IsIncreasing())
@@ -87,7 +87,7 @@ void PrinterVisitor::VisitRange(Range * range) {
    }
 }
 
-void PrinterVisitor::VisitFor(For * forNode) {
+void PseudoCodePrinterVisitor::VisitFor(For * forNode) {
    std::cout << "Pour ";
    forNode->GetVariable()->Visit(this);
    forNode->GetRange()->Visit(this);
@@ -95,31 +95,31 @@ void PrinterVisitor::VisitFor(For * forNode) {
    forNode->GetBloc()->Visit(this);
 }
 
-void PrinterVisitor::VisitFunction(Function * function) {
+void PseudoCodePrinterVisitor::VisitFunction(Function * function) {
    //todo
 }
 
-void PrinterVisitor::VisitSignature(Signature * signature) {
+void PseudoCodePrinterVisitor::VisitSignature(Signature * signature) {
    //todo
 }
 
-void PrinterVisitor::VisitFunctionDeclaration(FunctionDeclaration * functionDecl) {
+void PseudoCodePrinterVisitor::VisitFunctionDeclaration(FunctionDeclaration * functionDecl) {
    //todo
 }
 
-void PrinterVisitor::VisitIncludeLib(IncludeLib* includeLib) {
+void PseudoCodePrinterVisitor::VisitIncludeLib(IncludeLib* includeLib) {
    //todo
 }
 
-void PrinterVisitor::VisitPrintableFromString(PrintableFromString * printStr) {
+void PseudoCodePrinterVisitor::VisitPrintableFromString(PrintableFromString * printStr) {
    std::cout << "\""  << printStr->GetString() << "\"";
 }
 
-void PrinterVisitor::VisitPrintableFromExpression(PrintableFromExpression * printExpr) {
+void PseudoCodePrinterVisitor::VisitPrintableFromExpression(PrintableFromExpression * printExpr) {
    printExpr->GetExpression()->Visit(this);
 }
 
-void PrinterVisitor::VisitPrint(Print * print) {
+void PseudoCodePrinterVisitor::VisitPrint(Print * print) {
    std::cout << "Affiche ";
    for(int iPrintable = 0; iPrintable < print->GetNbPrintables(); iPrintable++) {
       print->GetPrintable(iPrintable)->Visit(this);
@@ -130,22 +130,22 @@ void PrinterVisitor::VisitPrint(Print * print) {
    std::cout << std::endl;
 }
 
-void PrinterVisitor::VisitType(Type * type) {
+void PseudoCodePrinterVisitor::VisitType(Type * type) {
    std::cout << type->GetName();
 }
 
-void PrinterVisitor::VisitVariable(Variable* variable)  {
+void PseudoCodePrinterVisitor::VisitVariable(Variable* variable)  {
    std::cout << variable->GetName();
 }
 
-void PrinterVisitor::VisitWhile(While* whileNode) {
+void PseudoCodePrinterVisitor::VisitWhile(While* whileNode) {
    std::cout << "Tant que ";
    whileNode->GetCondition()->Visit(this);
    std::cout << std::endl;
    whileNode->GetBloc()->Visit(this);
 }
    
-void PrinterVisitor::VisitMain(Main* mainNode) {
+void PseudoCodePrinterVisitor::VisitMain(Main* mainNode) {
    //todo
 }
 

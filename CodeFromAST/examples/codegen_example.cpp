@@ -1,4 +1,4 @@
-#include "CodeFromAST/PrinterVisitor.h"
+#include "CodeFromAST/PseudoCodePrinterVisitor.h"
 
 // Some Utilities
 int count_args() { return 0; }
@@ -111,7 +111,7 @@ int main()
       ifStatement
    );
 
-   AbstractVisitor* visitor = new PrinterVisitor();
+   AbstractVisitor* visitor = new PseudoCodePrinterVisitor();
 
    bloc2->Visit(visitor);
    std::cout << std::endl;
