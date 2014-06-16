@@ -3,9 +3,13 @@
 
 #include "indentation_space.h"
 
+class AbstractVisitor;
+
 class CodeNode {
 public:
    virtual void PrintDebug(int level = 0) = 0;
+
+   virtual void Visit(AbstractVisitor* visitor)  = 0;
 };
 
 #endif

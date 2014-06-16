@@ -13,6 +13,8 @@ public:
 
    virtual void PrintDebug(int level = 0);
 
+   virtual void Visit(AbstractVisitor* visitor);
+
 private:
    Variable* m_variable;
    Expression* m_expr;

@@ -23,7 +23,7 @@ void ExprFromInt::Visit(AbstractVisitor* visitor) {
 }
 
 
-ExprFromBool::ExprFromBool(int value) {
+ExprFromBool::ExprFromBool(bool value) {
    m_value = value;
 }
 

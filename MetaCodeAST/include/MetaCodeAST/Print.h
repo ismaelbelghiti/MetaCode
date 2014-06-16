@@ -22,6 +22,8 @@ public:
 
    virtual void PrintDebug(int level = 0);
 
+   virtual void Visit(AbstractVisitor* visitor);
+
 private:
    std::string m_text;
 };
@@ -35,6 +37,8 @@ public:
    virtual Expression* GetExpression();
 
    virtual void PrintDebug(int level = 0);
+
+   virtual void Visit(AbstractVisitor* visitor);
 
 private:
    Expression* m_expr;
@@ -54,6 +58,8 @@ public:
    virtual bool WithEndline();
 
    virtual void PrintDebug(int level = 0);
+
+   virtual void Visit(AbstractVisitor* visitor);
 
 private:
    int m_nbPrintables;

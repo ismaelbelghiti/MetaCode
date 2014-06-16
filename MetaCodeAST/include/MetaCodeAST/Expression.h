@@ -3,13 +3,9 @@
 
 #include "Variable.h"
 
-class AbstractVisitor;
-
 class Expression : public CodeNode {
 public:
    virtual Type* GetType() = 0;
-
-   virtual void Visit(AbstractVisitor* visitor)  = 0;
 };
 
 class ExprFromInt : public Expression {
@@ -30,7 +26,7 @@ private:
 
 class ExprFromBool : public Expression {
 public:
-   ExprFromBool(int value);
+   ExprFromBool(bool value);
 
    virtual bool GetValue();
 

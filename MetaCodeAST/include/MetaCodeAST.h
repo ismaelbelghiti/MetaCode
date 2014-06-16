@@ -14,6 +14,6 @@
 #include "MetaCodeAST/IncludeLib.h"
 #include "MetaCodeAST/Main.h"
 #include "MetaCodeAST/Function.h"
-
+#include "MetaCodeAST/AbstractVisitor.h"
 
 #endif

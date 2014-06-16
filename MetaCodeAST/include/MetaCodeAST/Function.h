@@ -6,19 +6,15 @@
 
 class Function : public CodeNode {
 public:
-   Function(Type* type, std::string name) {
-      m_type = type;
-      m_name = name; 
-   }
+   Function(Type* type, std::string name);
 
-  virtual Type* GetType() { return m_type; }
+   virtual Type* GetType();
 
-  virtual std::string GetName() { return m_name; }
+   virtual std::string GetName();
 
-  virtual void PrintDebug(int level = 0) {
-     printIndent(level);
-     std::cout << GetName();
-  }
+   virtual void PrintDebug(int level = 0);
+
+   virtual void Visit(AbstractVisitor* visitor);
 
 private:
   Type* m_type;
@@ -27,26 +23,15 @@ private:
 
 class Signature : public CodeNode {
 public:
-   Signature(Variable** arg, int nbArgs) {
-      m_arg = arg;
-      m_nbArgs = nbArgs;
-   }
+   Signature(Variable** arg, int nbArgs);
 
-   virtual int GetNbArgs() { return m_nbArgs; }
+   virtual int GetNbArgs();
 
-   virtual Variable* GetArg(int iArg) { return m_arg[iArg]; }
+   virtual Variable* GetArg(int iArg);
    
-   virtual void PrintDebug(int level = 0)
-   {
-      printIndent(level);
-      for(int iArg = 0; iArg < GetNbArgs(); iArg++) {
-	 GetArg(iArg)->GetType()->PrintDebug();
-	 std::cout << " ";
-	 GetArg(iArg)->PrintDebug();
-	 if(iArg < GetNbArgs()-1)
-	    std::cout << ",";
-      }
-   }
+   virtual void PrintDebug(int level = 0);
+
+   virtual void Visit(AbstractVisitor* visitor);
 
 private:
    Variable** m_arg;
@@ -55,26 +40,17 @@ private:
 
 class FunctionDeclaration : public CodeNode {
 public:
-   FunctionDeclaration(Function* func, Signature* signature,  Bloc* bloc) {
-      m_func = func;
-      m_signature = signature;
-      m_bloc = bloc;
-   }
+   FunctionDeclaration(Function* func, Signature* signature,  Bloc* bloc);
 
-   virtual Function* GetFunction() { return m_func; }
+   virtual Function* GetFunction();
 
-   virtual Signature* GetSignature() { return m_signature; }
+   virtual Signature* GetSignature();
 
-   virtual Bloc* GetBloc() { return m_bloc; }
+   virtual Bloc* GetBloc();
 
-   virtual void PrintDebug(int level = 0) {
-      printIndent(level);
-      std::cout << "Function ";
-      GetFunction()->PrintDebug();
-      std::cout << " (";
-      GetSignature()->PrintDebug();
-      std::cout << ")";
-   }
+   virtual void PrintDebug(int level = 0);
+
+   virtual void Visit(AbstractVisitor* visitor);
 
 private:
    Function *m_func;

@@ -1,4 +1,5 @@
 #include "MetaCodeAST/Variable.h"
+#include "MetaCodeAST/AbstractVisitor.h"
 
 Type::Type(std::string typeName) { 
    m_typeName = typeName; 
@@ -16,6 +17,11 @@ void Type::PrintDebug(int level) {
    printIndent(level);
    std::cout << GetName();
 }
+
+void Type::Visit(AbstractVisitor* visitor) {
+   visitor->VisitType(this);
+}
+
 
 
 Type * cInt = new Type("int");
@@ -36,4 +42,10 @@ void Variable::PrintDebug(int level) {
    printIndent(level);
    std::cout << GetName();
 }
+
+void Variable::Visit(AbstractVisitor* visitor) {
+   visitor->VisitVariable(this);
+}
+
+
 

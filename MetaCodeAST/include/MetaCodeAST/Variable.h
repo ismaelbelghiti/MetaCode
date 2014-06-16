@@ -14,6 +14,8 @@ public:
 
    virtual void PrintDebug(int level = 0);
 
+   virtual void Visit(AbstractVisitor* visitor);
+
 private:
    std::string m_typeName;
 };
@@ -32,6 +34,8 @@ public:
    virtual Type* GetType();
 
    virtual void PrintDebug(int level = 0);
+
+   virtual void Visit(AbstractVisitor* visitor);
 
 private:
    std::string m_name;

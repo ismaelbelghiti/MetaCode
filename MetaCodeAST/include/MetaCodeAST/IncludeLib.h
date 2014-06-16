@@ -9,6 +9,10 @@ public:
 
    virtual std::string GetName(); 
 
+   virtual void PrintDebug(int level = 0);
+
+   virtual void Visit(AbstractVisitor* visitor);
+
 private:
    std::string m_name;
 };

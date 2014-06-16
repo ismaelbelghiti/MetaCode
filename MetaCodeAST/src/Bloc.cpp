@@ -1,4 +1,5 @@
 #include "MetaCodeAST/Bloc.h"
+#include "MetaCodeAST/AbstractVisitor.h"
 
 Bloc::Bloc(CodeNode** codeNode, int nbCodeNodes) {
    m_codeNode = codeNode; 
@@ -21,4 +22,8 @@ void Bloc::PrintDebug(int level) {
       std::cout << std::endl;
    }
    std::cout << "}" << std::endl;
+}
+
+void Bloc::Visit(AbstractVisitor* visitor) {
+   visitor->VisitBloc(this);
 }

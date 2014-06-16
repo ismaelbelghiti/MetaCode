@@ -1,6 +1,6 @@
-#include "MetaCodeAST/While.h"
+#include "MetaCodeAST/Function.h"
+#include "MetaCodeAST/AbstractVisitor.h"
 
-/*
 Function::Function(Type* type, std::string name) {
    m_type = type;
    m_name = name; 
@@ -17,6 +17,10 @@ std::string Function::GetName() {
 void Function::PrintDebug(int level) {
    printIndent(level);
    std::cout << GetName();
+}
+
+void Function::Visit(AbstractVisitor* visitor) {
+   visitor->VisitFunction(this);
 }
 
 Signature::Signature(Variable** arg, int nbArgs) {
@@ -42,6 +46,11 @@ void Signature::PrintDebug(int level) {
 	 std::cout << ",";
    }
 }
+
+void Signature::Visit(AbstractVisitor* visitor) {
+   visitor->VisitSignature(this);
+}
+
 
 FunctionDeclaration::FunctionDeclaration(Function* func, Signature* signature,  Bloc* bloc) {
    m_func = func;
@@ -69,5 +78,9 @@ void FunctionDeclaration::PrintDebug(int level) {
    GetSignature()->PrintDebug();
    std::cout << ")";
 }
-*/
+
+void FunctionDeclaration::Visit(AbstractVisitor* visitor) {
+   visitor->VisitFunctionDeclaration(this);
+}
+
 

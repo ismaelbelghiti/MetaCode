@@ -1,4 +1,5 @@
 #include "MetaCodeAST/For.h"
+#include "MetaCodeAST/AbstractVisitor.h"
 
 Range::Range(bool isIncreasing, Expression* start, Expression* excludedEnd, Expression* includedEnd) {
    m_isIncreasing = isIncreasing;
@@ -36,6 +37,9 @@ void Range::PrintDebug(int level) {
 	 
 }
 
+void Range::Visit(AbstractVisitor* visitor) {
+   visitor->VisitRange(this);
+}
 
 
 For::For(Variable* variable, Range* range, Bloc* bloc) {
@@ -63,5 +67,9 @@ void For::PrintDebug(int level) {
    GetRange()->PrintDebug();
    std::cout << std::endl;
    GetBloc()->PrintDebug(level);
+}
+
+void For::Visit(AbstractVisitor* visitor) {
+   visitor->VisitFor(this);
 }
 

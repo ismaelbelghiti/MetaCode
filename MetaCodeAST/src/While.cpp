@@ -1,4 +1,5 @@
 #include "MetaCodeAST/While.h"
+#include "MetaCodeAST/AbstractVisitor.h"
 
 While::While(Expression *condExpr, Bloc* bloc) {
    m_condExpr = condExpr;
@@ -16,3 +17,8 @@ void While::PrintDebug(int level) {
    std::cout << std::endl;
    GetBloc()->PrintDebug(level);
 }
+
+void While::Visit(AbstractVisitor* visitor) {
+   visitor->VisitWhile(this);
+}
+

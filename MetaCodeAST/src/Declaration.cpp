@@ -1,4 +1,5 @@
 #include "MetaCodeAST/Declaration.h"
+#include "MetaCodeAST/AbstractVisitor.h"
 
 Declaration::Declaration(Variable* variable, Expression* expr) {     
    m_variable = variable;
@@ -22,4 +23,6 @@ void Declaration::PrintDebug(int level) {
    GetExpression()->PrintDebug();
 }
 
-
+void Declaration::Visit(AbstractVisitor* visitor) {
+   visitor->VisitDeclaration(this);
+}

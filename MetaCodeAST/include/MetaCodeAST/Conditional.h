@@ -14,6 +14,8 @@ public:
 
    virtual void PrintDebug(int level = 0);
 
+   virtual void Visit(AbstractVisitor* visitor);
+
 private:
    Expression *m_condExpr;
    Bloc* m_bloc;
@@ -30,6 +32,8 @@ public:
 
    virtual void PrintDebug(int level = 0);
 
+   virtual void Visit(AbstractVisitor* visitor);
+
 private:
    Expression *m_condExpr;
    Bloc* m_bloc;
@@ -43,6 +47,8 @@ public:
    virtual Bloc* GetBloc();
 
    virtual void PrintDebug(int level = 0);
+
+   virtual void Visit(AbstractVisitor* visitor);
 
 private:
    Expression *m_condExpr;

@@ -11,6 +11,10 @@ file(GLOB_RECURSE source_files src/*.cpp)
 
 include_directories(include)
 
+message("${source_file}")
+
+message("${include_file}")
+
 add_library(metacodeast SHARED ${include_files} ${source_files})
 
 #Example

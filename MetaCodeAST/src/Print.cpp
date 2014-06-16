@@ -1,4 +1,5 @@
 #include "MetaCodeAST/Print.h"
+#include "MetaCodeAST/AbstractVisitor.h"
 
 std::string Printable::GetString() {
    return std::string();
@@ -26,6 +27,10 @@ void PrintableFromString::PrintDebug(int level) {
    std::cout << "\""  << GetString() << "\"";
 }
 
+void PrintableFromString::Visit(AbstractVisitor* visitor) {
+   visitor->VisitPrintableFromString(this);
+}
+
 
 PrintableFromExpression::PrintableFromExpression(Expression *expr) {
    m_expr = expr;
@@ -41,6 +46,10 @@ Expression* PrintableFromExpression::GetExpression() {
 
 void PrintableFromExpression::PrintDebug(int level) {
    GetExpression()->PrintDebug(level);
+}
+
+void PrintableFromExpression::Visit(AbstractVisitor* visitor) {
+   visitor->VisitPrintableFromExpression(this);
 }
 
 
@@ -71,4 +80,8 @@ void Print::PrintDebug(int level) {
    }	 
    if(WithEndline())
       std::cout << "endline";
+}
+
+void Print::Visit(AbstractVisitor* visitor) {
+   visitor->VisitPrint(this);
 }
