@@ -2,12 +2,13 @@
 #define CLIKE_PRINTER_VISITOR_H
 
 #include "MetaCodeAST/AbstractVisitor.h"
+#include "CodeFromAST/InfosGatherVisitor.h"
 
 class CLikePrinterVisitor : public AbstractVisitor {
 public:
    enum Language { C, CPP, JAVA, JVS };
 
-   CLikePrinterVisitor(Language lang);
+   CLikePrinterVisitor(Language lang, CodeNode* root);
 
    virtual void VisitExprFromInt(ExprFromInt* exprFromInt);
 
@@ -71,10 +72,14 @@ public:
    
    virtual void VisitMain(Main* mainNode);
 
+   virtual int GetIndentLevel(CodeNode* codeNode);
+
 private:
    virtual void VisitBinaryOperation(BinaryOperation* binOp, std::string opString);
 
    Language m_lang;
+
+   InfosGatherVisitor* m_info;
 };
 
 #endif

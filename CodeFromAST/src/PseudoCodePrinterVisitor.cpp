@@ -204,7 +204,8 @@ int PseudoCodePrinterVisitor::GetIndentLevel(CodeNode* codeNode) {
 }
 
 //private:
-void PseudoCodePrinterVisitor::VisitBinaryOperation(BinaryOperation* binOp, std::string opString) {
+void PseudoCodePrinterVisitor::VisitBinaryOperation(BinaryOperation* binOp, 
+						    std::string opString) {
    binOp->GetLeftExpr()->Visit(this);
    std::cout << opString;
    binOp->GetRightExpr()->Visit(this);

@@ -119,7 +119,7 @@ int main()
    std::cout << std::endl;
 
    std::cout << "C:" << std::endl;
-   AbstractVisitor* cVisitor = new CLikePrinterVisitor(CLikePrinterVisitor::C);
+   AbstractVisitor* cVisitor = new CLikePrinterVisitor(CLikePrinterVisitor::C,bloc2);
    bloc2->Visit(cVisitor);
    std::cout << std::endl;
 
