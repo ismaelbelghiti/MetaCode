@@ -117,7 +117,7 @@ int main()
    bloc2->Visit(pseudoCodeVisitor);
    std::cout << std::endl;
 
-   std::cout << "C:";
+   std::cout << "C:" << std::endl;
    AbstractVisitor* cVisitor = new CLikePrinterVisitor(CLikePrinterVisitor::C);
    bloc2->Visit(cVisitor);
    std::cout << std::endl;
