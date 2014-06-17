@@ -1,5 +1,5 @@
-#ifndef PRINTER_VISITOR_H
-#define PRINTER_VISITOR_H
+#ifndef PSEUDOCODE_PRINTER_VISITOR_H
+#define PSEUDOCODE_PRINTER_VISITOR_H
 
 #include "MetaCodeAST/AbstractVisitor.h"
 
