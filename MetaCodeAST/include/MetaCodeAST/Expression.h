@@ -122,7 +122,6 @@ public:
 
    virtual void PrintDebug(int level = 0);
 
-   virtual void Visit(AbstractVisitor* visitor);
 private:
    Expression *m_leftExpr, *m_rightExpr;
 };
@@ -134,6 +133,8 @@ public:
    virtual Type* GetType();
 
    virtual std::string GetSymbol();
+
+   virtual void Visit(AbstractVisitor* visitor);
 };
 
 class Multiplication : public BinaryOperation {
@@ -143,6 +144,8 @@ public:
    virtual Type* GetType();
 
    virtual std::string GetSymbol();
+
+   virtual void Visit(AbstractVisitor* visitor);
 };
 
 class Substraction : public BinaryOperation {
@@ -152,6 +155,8 @@ public:
    virtual Type* GetType();
 
    virtual std::string GetSymbol();
+
+   virtual void Visit(AbstractVisitor* visitor);
 };
 
 class EuclidianDivision : public BinaryOperation {
@@ -161,6 +166,8 @@ public:
    virtual Type* GetType();
 
    virtual std::string GetSymbol();
+
+   virtual void Visit(AbstractVisitor* visitor);
 };
 
 
@@ -171,6 +178,8 @@ public:
    virtual Type* GetType();
 
    virtual std::string GetSymbol();
+
+   virtual void Visit(AbstractVisitor* visitor);
 };
 
 class And : public BinaryOperation {
@@ -180,6 +189,8 @@ public:
    virtual Type* GetType();
 
    virtual std::string GetSymbol();
+
+   virtual void Visit(AbstractVisitor* visitor);
 };
 
 class Or : public BinaryOperation {
@@ -189,6 +200,8 @@ public:
    virtual Type* GetType();
 
    virtual std::string GetSymbol();
+
+   virtual void Visit(AbstractVisitor* visitor);
 };
 
 #endif

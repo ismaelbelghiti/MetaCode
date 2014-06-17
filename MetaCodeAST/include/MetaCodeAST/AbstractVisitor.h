@@ -17,7 +17,19 @@ public:
 
    virtual void VisitNegation(Negation* negation) = 0;
 
-   virtual void VisitBinaryOperation(BinaryOperation* binaryOp) = 0;
+   virtual void VisitAddition(Addition * addition) = 0;
+
+   virtual void VisitMultiplication(Multiplication * multiplication) = 0;
+
+   virtual void VisitSubstraction(Substraction * substraction) = 0;
+
+   virtual void VisitEuclidianDivision(EuclidianDivision * euclDiv) = 0;
+
+   virtual void VisitModulus(Modulus * modulus) = 0;
+
+   virtual void VisitAnd(And * andNode) = 0;
+
+   virtual void VisitOr(Or * orNode) = 0;
 
    virtual void VisitBloc(Bloc* bloc) = 0;
 

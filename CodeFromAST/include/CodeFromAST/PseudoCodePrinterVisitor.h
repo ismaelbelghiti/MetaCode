@@ -17,7 +17,19 @@ public:
 
    virtual void VisitNegation(Negation* negation);
 
-   virtual void VisitBinaryOperation(BinaryOperation* binaryOp);
+   virtual void VisitAddition(Addition * addition);
+
+   virtual void VisitMultiplication(Multiplication * multiplication);
+
+   virtual void VisitSubstraction(Substraction * substraction);
+
+   virtual void VisitEuclidianDivision(EuclidianDivision * euclDiv);
+
+   virtual void VisitModulus(Modulus * modulus);
+
+   virtual void VisitAnd(And * andNode);
+
+   virtual void VisitOr(Or * orNode);
 
    virtual void VisitBloc(Bloc* bloc);
 
@@ -54,6 +66,9 @@ public:
    virtual void VisitWhile(While* whileNode);
    
    virtual void VisitMain(Main* mainNode);
+
+private:
+   virtual void VisitBinaryOperation(BinaryOperation* binOp, std::string opString);
 };
 
 #endif

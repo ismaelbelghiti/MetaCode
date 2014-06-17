@@ -31,15 +31,37 @@ void PseudoCodePrinterVisitor::VisitNegation(Negation* negation) {
    negation->GetExpression()->Visit(this);
 }
 
-void PseudoCodePrinterVisitor::VisitBinaryOperation(BinaryOperation* binaryOp) {
-   binaryOp->GetLeftExpr()->Visit(this);
-   std::cout << " " << binaryOp->GetSymbol() << " ";
-   binaryOp->GetRightExpr()->Visit(this);
+void PseudoCodePrinterVisitor::VisitAddition(Addition * addition) {
+   VisitBinaryOperation(addition, " + ");
+}
+
+void PseudoCodePrinterVisitor::VisitMultiplication(Multiplication * multiplication) {
+   VisitBinaryOperation(multiplication, " * ");
+}
+
+void PseudoCodePrinterVisitor::VisitSubstraction(Substraction * substraction) {
+   VisitBinaryOperation(substraction, " - ");
+}
+
+void PseudoCodePrinterVisitor::VisitEuclidianDivision(EuclidianDivision * euclDiv) {
+   VisitBinaryOperation(euclDiv, " / ");
+}
+
+void PseudoCodePrinterVisitor::VisitModulus(Modulus * modulus) {
+   VisitBinaryOperation(modulus, " modulo ");
+}
+
+void PseudoCodePrinterVisitor::VisitAnd(And * andNode) {
+   VisitBinaryOperation(andNode, " et ");
+}
+
+void PseudoCodePrinterVisitor::VisitOr(Or * orNode) {
+   VisitBinaryOperation(orNode, " ou ");
 }
 
 void PseudoCodePrinterVisitor::VisitBloc(Bloc* bloc) {
    for(int iCodeNode = 0; iCodeNode < bloc->GetNbCodeNodes(); iCodeNode++) {
-      bloc->GetCodeNode(iCodeNode)->Visit(this);
+     bloc->GetCodeNode(iCodeNode)->Visit(this);
       std::cout << std::endl;
    }
 }
@@ -149,4 +171,11 @@ void PseudoCodePrinterVisitor::VisitMain(Main* mainNode) {
    //todo
 }
 
+
+//private:
+void PseudoCodePrinterVisitor::VisitBinaryOperation(BinaryOperation* binOp, std::string opString) {
+   binOp->GetLeftExpr()->Visit(this);
+   std::cout << opString;
+   binOp->GetRightExpr()->Visit(this);
+}
 

@@ -158,12 +158,7 @@ void BinaryOperation::PrintDebug(int level) {
    std::cout << " " << GetSymbol() << " ";
    GetRightExpr()->PrintDebug();
 }
-
-void BinaryOperation::Visit(AbstractVisitor* visitor) {
-   visitor->VisitBinaryOperation(this);
-}
   
-
 Addition::Addition(Expression* leftExpr, Expression* rightExpr) 
    : BinaryOperation(leftExpr,rightExpr) {}
    
@@ -173,6 +168,10 @@ Type* Addition::GetType() {
 
 std::string Addition::GetSymbol() {
    return "+";
+}
+
+void Addition::Visit(AbstractVisitor* visitor) {
+   visitor->VisitAddition(this);
 }
 
 
@@ -187,6 +186,9 @@ std::string Multiplication::GetSymbol() {
    return "*";
 }
 
+void Multiplication::Visit(AbstractVisitor* visitor) {
+   visitor->VisitMultiplication(this);
+}
 
 Substraction::Substraction(Expression* leftExpr, Expression* rightExpr) 
    : BinaryOperation(leftExpr,rightExpr) {}
@@ -199,6 +201,11 @@ std::string Substraction::GetSymbol() {
    return "-";
 }
 
+void Substraction::Visit(AbstractVisitor* visitor) {
+   visitor->VisitSubstraction(this);
+}
+
+
 
 EuclidianDivision::EuclidianDivision(Expression* leftExpr, Expression* rightExpr) 
    : BinaryOperation(leftExpr,rightExpr) {}
@@ -209,6 +216,10 @@ Type* EuclidianDivision::GetType() {
 
 std::string EuclidianDivision::GetSymbol() {
    return "/";
+}
+
+void EuclidianDivision::Visit(AbstractVisitor* visitor) {
+   visitor->VisitEuclidianDivision(this);
 }
 
 
@@ -223,6 +234,10 @@ std::string Modulus::GetSymbol() {
    return "%";
 }
 
+void Modulus::Visit(AbstractVisitor* visitor) {
+   visitor->VisitModulus(this);
+}
+
 
 And::And(Expression* leftExpr, Expression* rightExpr) 
    : BinaryOperation(leftExpr,rightExpr) {}
@@ -230,6 +245,10 @@ And::And(Expression* leftExpr, Expression* rightExpr)
 Type* And::GetType() { return cBool; }
 
 std::string And::GetSymbol() { return "&&"; }
+
+void And::Visit(AbstractVisitor* visitor) {
+   visitor->VisitAnd(this);
+}
 
 
 Or::Or(Expression* leftExpr, Expression* rightExpr) 
@@ -239,3 +258,6 @@ Type* Or::GetType() { return cBool; }
 
 std::string Or::GetSymbol() { return "||"; }
 
+void Or::Visit(AbstractVisitor* visitor) {
+   visitor->VisitOr(this);
+}
