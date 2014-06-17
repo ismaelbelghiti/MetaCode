@@ -2,9 +2,12 @@
 #define PSEUDOCODE_PRINTER_VISITOR_H
 
 #include "MetaCodeAST/AbstractVisitor.h"
+#include "CodeFromAST/InfosGatherVisitor.h"
 
 class PseudoCodePrinterVisitor : public AbstractVisitor {
 public:
+   PseudoCodePrinterVisitor(CodeNode* root);
+   
    virtual void VisitExprFromInt(ExprFromInt* exprFromInt);
 
    virtual void VisitExprFromBool(ExprFromBool* exprFromBool);
@@ -67,8 +70,12 @@ public:
    
    virtual void VisitMain(Main* mainNode);
 
+   virtual int GetIndentLevel(CodeNode* codeNode);
+
 private:
    virtual void VisitBinaryOperation(BinaryOperation* binOp, std::string opString);
+
+   InfosGatherVisitor* m_info;
 };
 
 #endif

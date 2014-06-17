@@ -71,6 +71,9 @@ public:
    
    virtual void VisitMain(Main* mainNode);
 
+
+   virtual int GetIndentLevel(CodeNode* codeNode);
+
 private:
    virtual void VisitBinaryOperation(BinaryOperation* binOp);
 

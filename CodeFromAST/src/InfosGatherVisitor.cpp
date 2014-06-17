@@ -132,6 +132,11 @@ void InfosGatherVisitor::VisitMain(Main* mainNode) {
 }
 
 
+int InfosGatherVisitor::GetIndentLevel(CodeNode* codeNode) {
+   return m_indentLevel[codeNode];
+}
+
+
 //private:
 void InfosGatherVisitor::VisitBinaryOperation(BinaryOperation* binOp) {
    Call(binOp->GetLeftExpr(),0);
@@ -144,7 +149,7 @@ int InfosGatherVisitor::GetCurrentLevel() {
 
 void InfosGatherVisitor::Call(CodeNode* codeNode, int indentLevel) {
    m_indentLevel[codeNode] = indentLevel; 
-   std::cout << indentLevel << std::endl;
+   //std::cout << indentLevel << std::endl;
 
    m_callIndentLevel.push_back(indentLevel);
    m_activeParent.push_back(codeNode);

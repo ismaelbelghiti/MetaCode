@@ -1,5 +1,6 @@
 #include "CodeFromAST/PseudoCodePrinterVisitor.h"
 #include "CodeFromAST/CLikePrinterVisitor.h"
+#include "CodeFromAST/InfosGatherVisitor.h"
 
 // Some Utilities
 int count_args() { return 0; }
@@ -113,7 +114,7 @@ int main()
    );
 
    std::cout << "PseudoCode : " << std::endl;
-   AbstractVisitor* pseudoCodeVisitor = new PseudoCodePrinterVisitor();
+   AbstractVisitor* pseudoCodeVisitor = new PseudoCodePrinterVisitor(bloc2);
    bloc2->Visit(pseudoCodeVisitor);
    std::cout << std::endl;
 
@@ -121,6 +122,10 @@ int main()
    AbstractVisitor* cVisitor = new CLikePrinterVisitor(CLikePrinterVisitor::C);
    bloc2->Visit(cVisitor);
    std::cout << std::endl;
+
+   //std::cout << "Indent Level:" << std::endl;
+   //AbstractVisitor* info = new InfosGatherVisitor(bloc2);
+   //std::cout << std::endl;
 
 
    return 0;
