@@ -1,6 +1,21 @@
 #include "CodeFromAST/CodeExpander.h"
 
-CodeNode* CodeExpander::Expand(CodeNode* root) {}
+CodeNode* CodeExpander::Expand(CodeNode* root) {
+   root->Visit(this);
+   return PopResult();
+}
+
+void CodeExpander::PushResult(CodeNode* codeNode) {
+   m_result.push_back(codeNode);
+}
+
+CodeNode* CodeExpander::PopResult() {
+   CodeNode* result = m_result.back();
+   m_result.pop_back();
+   return result;
+}
+
+
 
 void CodeExpander::VisitExprFromInt(ExprFromInt* exprFromInt) {}
 
@@ -28,7 +43,14 @@ void CodeExpander::VisitAnd(And * andNode) {}
 
 void CodeExpander::VisitOr(Or * orNode) {}
 
-void CodeExpander::VisitBloc(Bloc* bloc) {}
+void CodeExpander::VisitBloc(Bloc* bloc) {
+   int nbCodeNodes = bloc->GetNbCodeNodes();
+   CodeNode** codeNode = new CodeNode*[nbCodeNodes];
+   for(int iCodeNode = 0; iCodeNode < nbCodeNodes; iCodeNode++) {
+      codeNode[iCodeNode] = Expand(bloc->GetCodeNode(iCodeNode));
+   }
+   PushResult(new Bloc(codeNode,nbCodeNodes));
+}
 
 void CodeExpander::VisitIf(If * ifNode) {}
 

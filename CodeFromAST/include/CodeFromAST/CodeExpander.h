@@ -1,6 +1,7 @@
 #ifndef CODE_EXPANDER_H
 #define CODE_EXPANDER_H
 
+#include <vector>
 #include "MetaCodeAST/AbstractVisitor.h"
 
 /**
@@ -11,6 +12,10 @@
 class CodeExpander : public AbstractVisitor {
 public:
    virtual CodeNode* Expand(CodeNode* root);
+
+   virtual void PushResult(CodeNode* codeNode);
+
+   virtual CodeNode* PopResult();
 
    virtual void VisitExprFromInt(ExprFromInt* exprFromInt);
 
@@ -73,6 +78,9 @@ public:
    virtual void VisitWhile(While* whileNode);
    
    virtual void VisitMain(Main* mainNode);
+
+private:
+   std::vector<CodeNode*> m_result;
 };
 
 #endif
