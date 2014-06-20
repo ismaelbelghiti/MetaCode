@@ -17,6 +17,8 @@ public:
 
    virtual CodeNode* PopResult();
 
+// Visits
+
    virtual void VisitExprFromInt(ExprFromInt* exprFromInt);
 
    virtual void VisitExprFromBool(ExprFromBool* exprFromBool);

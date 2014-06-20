@@ -1,5 +1,6 @@
 #include "CodeFromAST/CodeExpander.h"
 
+
 CodeNode* CodeExpander::Expand(CodeNode* root) {
    root->Visit(this);
    return PopResult();
@@ -16,14 +17,17 @@ CodeNode* CodeExpander::PopResult() {
 }
 
 
+void CodeExpander::VisitExprFromInt(ExprFromInt* exprFromInt) {
+}
 
-void CodeExpander::VisitExprFromInt(ExprFromInt* exprFromInt) {}
+void CodeExpander::VisitExprFromBool(ExprFromBool* exprFromBool) {
+}
 
-void CodeExpander::VisitExprFromBool(ExprFromBool* exprFromBool) {}
+void CodeExpander::VisitExprFromVariable(ExprFromVariable* exprFromVariable) {
+}
 
-void CodeExpander::VisitExprFromVariable(ExprFromVariable* exprFromVariable) {}
-
-void CodeExpander::VisitParenthesizedExpr(ParenthesizedExpr* parenthesizedExpr) {}
+void CodeExpander::VisitParenthesizedExpr(ParenthesizedExpr* parenthesizedExpr) {
+}
 
 void CodeExpander::VisitMinus(Minus* minus) {}
 
