@@ -1,6 +1,26 @@
 #include "CodeFromAST/CodeExpander.h"
 #include "CodeFromAST/EmptyVisitor.h"
 
+class VariableExpander : public EmptyVisitor {
+public:
+   VariableExpander(CodeExpander* codeExpander) {
+      m_codeExpander = codeExpander;
+   }
+  
+   virtual void VisitVariable(Variable* var) {
+      m_result = new Variable(var->GetName(), var->GetType());
+   }
+
+   Variable* GetResult() {
+      return m_result;
+   };
+
+private:
+   CodeExpander* m_codeExpander;
+   Variable* m_result;
+};
+
+
 class ExprFromBoolExpander : public EmptyVisitor {
 public:
    ExprFromBoolExpander(CodeExpander* codeExpander) {
@@ -141,6 +161,14 @@ private:
    CodeExpander* m_codeExpander;
    Expression* m_result;
 };
+
+Variable* CodeExpander::ExpandVariable(Variable* var) {
+   VariableExpander* varExpander = new VariableExpander(this);
+   var->Visit(varExpander);
+   Variable* result = varExpander->GetResult();
+   delete varExpander;
+   return result;
+}
 
 ExprFromBool* CodeExpander::ExpandExprFromBool(ExprFromBool* exprFromBool) {
    ExprFromBoolExpander* exprExpander = new ExprFromBoolExpander(this);

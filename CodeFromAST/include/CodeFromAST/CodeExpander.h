@@ -11,6 +11,8 @@
  */
 class CodeExpander : public AbstractVisitor {
 public:
+   virtual Variable* ExpandVariable(Variable* var);
+
    virtual ExprFromBool* ExpandExprFromBool(ExprFromBool* exprFromBool);
 
    virtual ExprFromInt* ExpandExprFromInt(ExprFromInt* exprFromInt);
