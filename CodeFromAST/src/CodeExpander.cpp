@@ -1,6 +1,24 @@
 #include "CodeFromAST/CodeExpander.h"
 #include "CodeFromAST/EmptyVisitor.h"
 
+class ExprFromBoolExpander : public EmptyVisitor {
+public:
+   ExprFromBoolExpander(CodeExpander* codeExpander) {
+      m_codeExpander = codeExpander;
+   }
+  
+   virtual void VisitExprFromBool(ExprFromBool* exprFromBool) {
+      m_result = new ExprFromBool(exprFromBool->GetValue());
+   }
+
+   ExprFromBool* GetResult() {
+      return m_result;
+   };
+
+private:
+   CodeExpander* m_codeExpander;
+   ExprFromBool* m_result;
+};
 
 class ExprFromIntExpander : public EmptyVisitor {
 public:
@@ -124,10 +142,10 @@ private:
    Expression* m_result;
 };
 
-Expression* CodeExpander::ExpandExpression(Expression* expr) {
-   ExpressionExpander* exprExpander = new ExpressionExpander(this);
-   expr->Visit(exprExpander);
-   Expression* result = exprExpander->GetResult();
+ExprFromBool* CodeExpander::ExpandExprFromBool(ExprFromBool* exprFromBool) {
+   ExprFromBoolExpander* exprExpander = new ExprFromBoolExpander(this);
+   exprFromBool->Visit(exprExpander);
+   ExprFromBool* result = exprExpander->GetResult();
    delete exprExpander;
    return result;
 }
@@ -136,6 +154,14 @@ ExprFromInt* CodeExpander::ExpandExprFromInt(ExprFromInt* exprFromInt) {
    ExprFromIntExpander* exprExpander = new ExprFromIntExpander(this);
    exprFromInt->Visit(exprExpander);
    ExprFromInt* result = exprExpander->GetResult();
+   delete exprExpander;
+   return result;
+}
+
+Expression* CodeExpander::ExpandExpression(Expression* expr) {
+   ExpressionExpander* exprExpander = new ExpressionExpander(this);
+   expr->Visit(exprExpander);
+   Expression* result = exprExpander->GetResult();
    delete exprExpander;
    return result;
 }
