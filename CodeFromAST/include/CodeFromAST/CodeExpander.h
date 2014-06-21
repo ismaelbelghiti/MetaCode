@@ -11,9 +11,9 @@
  */
 class CodeExpander : public AbstractVisitor {
 public:
+   virtual ExprFromInt* ExpandExprFromInt(ExprFromInt* exprFromInt);
 
    virtual Expression* ExpandExpression(Expression* expr);
-
 };
 
 #endif
