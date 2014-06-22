@@ -130,8 +130,56 @@ private:
    Expression* m_result;
 };
 
+class BlocExpander : public EmptyVisitor {
+public:
+   BlocExpander(CodeExpander* codeExpander) {
+      m_codeExpander = codeExpander;
+   }
+  
+   virtual void VisitBloc(Bloc* bloc) {
+      int nbCodeNodes = bloc->GetNbCodeNodes();
+      CodeNode** codeNode = new CodeNode*[nbCodeNodes];
+      for(int iCodeNode = 0; iCodeNode < nbCodeNodes; iCodeNode++)
+	 codeNode[iCodeNode] = bloc->GetCodeNode(iCodeNode);
+      m_result = new Bloc(codeNode, nbCodeNodes);
+   }
 
-class CodeNodeExpander : public EmptyVisitor {
+   Bloc* GetResult() {
+      return m_result;
+   };
+
+private:
+   CodeExpander* m_codeExpander;
+   Bloc* m_result;
+};
+
+
+class RangeExpander : public EmptyVisitor {
+public:
+   RangeExpander(CodeExpander* codeExpander) {
+      m_codeExpander = codeExpander;
+   }
+  
+   virtual void VisitRange(Range* range) {
+      m_result = new Range(
+	 range->IsIncreasing(),
+	 m_codeExpander->ExpandExpression(range->GetStart()),
+	 m_codeExpander->ExpandExpression(range->GetExcludedEnd()),
+	 m_codeExpander->ExpandExpression(range->GetIncludedEnd())
+      );
+   }
+
+   Range* GetResult() {
+      return m_result;
+   };
+
+private:
+   CodeExpander* m_codeExpander;
+   Range* m_result;
+};
+
+
+class CodeNodeExpander : public AbstractVisitor {
 public:
    CodeNodeExpander(CodeExpander* codeExpander) {
       m_codeExpander = codeExpander;
@@ -194,10 +242,85 @@ public:
       m_result = m_codeExpander->ExpandExpression(orNode);
    }
 
-//own
-   
+   virtual void VisitBloc(Bloc* bloc) {
+      m_result = m_codeExpander->ExpandBloc(bloc);
+   }
 
-   // Warning : treat them all !
+   virtual void VisitRange(Range * range) {
+      m_result = m_codeExpander->ExpandRange(range);
+   }
+
+//own
+   virtual void VisitIf(If * ifNode) {
+      m_result = new If(
+	 m_codeExpander->ExpandExpression(ifNode->GetCondition()),
+	 m_codeExpander->ExpandBloc(ifNode->GetBloc())
+      );
+   }
+
+   virtual void VisitElseIf(ElseIf * elseIfNode) {
+      m_result = new ElseIf(
+	 m_codeExpander->ExpandExpression(elseIfNode->GetCondition()),
+	 m_codeExpander->ExpandBloc(elseIfNode->GetBloc())
+      ); 
+   }
+
+   virtual void VisitElse(Else * elseNode) {
+      m_result = new Else(
+	 m_codeExpander->ExpandBloc(elseNode->GetBloc())
+      );
+   }
+
+   virtual void VisitDeclaration(Declaration * decl) {
+      m_result = new Declaration(
+	 m_codeExpander->ExpandVariable(decl->GetVariable()),
+	 m_codeExpander->ExpandExpression(decl->GetExpression())
+      );
+   }
+
+   virtual void VisitFor(For * forNode) {
+
+   }
+
+   virtual void VisitFunction(Function * function) {
+      
+   }
+
+   virtual void VisitSignature(Signature * signature) {
+
+   }
+
+   virtual void VisitFunctionDeclaration(FunctionDeclaration * functionDecl) {
+
+   }
+
+   virtual void VisitIncludeLib(IncludeLib* includeLib) {
+
+   }
+
+   virtual void VisitPrintableFromString(PrintableFromString * printStr) {
+
+   }
+
+   virtual void VisitPrintableFromExpression(PrintableFromExpression * printExpr) {
+
+   }
+
+   virtual void VisitPrint(Print * print) {
+
+   }
+
+   virtual void VisitWhile(While* whileNode) {
+
+   }
+   
+   virtual void VisitMain(Main* mainNode) {
+
+   }
+
+   virtual void VisitType(Type * type) {
+      //nothing to do, we do not expand types
+   }
 
    CodeNode* GetResult() {
       return m_result;
@@ -209,9 +332,11 @@ private:
 };
 
 
-/////////////
-// Methods //
-/////////////
+
+
+//////////////////////////////
+// Methods of CodeExpanders //
+//////////////////////////////
 
 
 Variable* CodeExpander::ExpandVariable(Variable* var) {
@@ -230,6 +355,22 @@ Expression* CodeExpander::ExpandExpression(Expression* expr) {
    return result;
 }
 
+Bloc* CodeExpander::ExpandBloc(Bloc* bloc) {
+   BlocExpander* blocExpander = new BlocExpander(this);
+   bloc->Visit(blocExpander);
+   Bloc* result = blocExpander->GetResult();
+   delete blocExpander;
+   return result;
+}
+
+Range* CodeExpander::ExpandRange(Range* range) {
+   RangeExpander* rangeExpander = new RangeExpander(this);
+   range->Visit(rangeExpander);
+   Range* result = rangeExpander->GetResult();
+   delete rangeExpander;
+   return result;
+}
+
 CodeNode* CodeExpander::ExpandCodeNode(CodeNode* codeNode) {
    CodeNodeExpander* codeNodeExpander = new CodeNodeExpander(this);
    codeNode->Visit(codeNodeExpander);
@@ -237,4 +378,5 @@ CodeNode* CodeExpander::ExpandCodeNode(CodeNode* codeNode) {
    delete codeNodeExpander;
    return result;
 }
+
 

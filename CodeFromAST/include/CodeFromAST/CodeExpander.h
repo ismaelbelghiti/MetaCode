@@ -15,6 +15,10 @@ public:
 
    virtual Expression* ExpandExpression(Expression* expr);
 
+   virtual Bloc* ExpandBloc(Bloc* bloc);
+
+   virtual Range* ExpandRange(Range* range);
+
    virtual CodeNode* ExpandCodeNode(CodeNode* codeNode);
 };
 
