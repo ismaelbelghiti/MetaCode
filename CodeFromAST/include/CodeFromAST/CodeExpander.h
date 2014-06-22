@@ -19,6 +19,8 @@ public:
 
    virtual Range* ExpandRange(Range* range);
 
+   virtual Printable* ExpandPrintable(Printable* printable);
+
    virtual CodeNode* ExpandCodeNode(CodeNode* codeNode);
 };
 

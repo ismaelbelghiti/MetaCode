@@ -178,6 +178,31 @@ private:
    Range* m_result;
 };
 
+class PrintableExpander : public EmptyVisitor {
+public:
+   PrintableExpander(CodeExpander* codeExpander) {
+      m_codeExpander = codeExpander;
+   }
+ 
+   virtual void VisitPrintableFromString(PrintableFromString* printableFromString) {
+      m_result = new PrintableFromString(printableFromString->GetString());
+   }
+
+   virtual void VisitPrintableFromExpression(PrintableFromExpression* printableFromExpr) {
+      m_result = new PrintableFromExpression(
+	 m_codeExpander->ExpandExpression(printableFromExpr->GetExpression()) 
+      );
+   }
+
+   Printable* GetResult() {
+      return m_result;
+   };
+
+private:
+   CodeExpander* m_codeExpander;
+   Printable* m_result;
+};
+
 
 class CodeNodeExpander : public AbstractVisitor {
 public:
@@ -279,31 +304,35 @@ public:
    }
 
    virtual void VisitFor(For * forNode) {
-
+      m_result = new For(
+	 m_codeExpander->ExpandVariable(forNode->GetVariable()),
+	 m_codeExpander->ExpandRange(forNode->GetRange()),
+	 m_codeExpander->ExpandBloc(forNode->GetBloc())
+      );
    }
 
    virtual void VisitFunction(Function * function) {
-      
+      // todo
    }
 
    virtual void VisitSignature(Signature * signature) {
-
+      // todo
    }
 
    virtual void VisitFunctionDeclaration(FunctionDeclaration * functionDecl) {
-
+      // todo
    }
 
    virtual void VisitIncludeLib(IncludeLib* includeLib) {
-
+      m_result = new IncludeLib(includeLib->GetName());
    }
 
    virtual void VisitPrintableFromString(PrintableFromString * printStr) {
-
+      m_result = m_codeExpander->ExpandPrintable(printStr);
    }
 
    virtual void VisitPrintableFromExpression(PrintableFromExpression * printExpr) {
-
+      m_result = m_codeExpander->ExpandPrintable(printExpr);
    }
 
    virtual void VisitPrint(Print * print) {
@@ -368,6 +397,14 @@ Range* CodeExpander::ExpandRange(Range* range) {
    range->Visit(rangeExpander);
    Range* result = rangeExpander->GetResult();
    delete rangeExpander;
+   return result;
+}
+
+Printable* CodeExpander::ExpandPrintable(Printable* printable) {
+   PrintableExpander* printableExpander = new PrintableExpander(this);
+   printable->Visit(printableExpander);
+   Printable* result = printableExpander->GetResult();
+   delete printableExpander;
    return result;
 }
 
