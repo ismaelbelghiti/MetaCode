@@ -346,11 +346,14 @@ public:
    }
 
    virtual void VisitWhile(While* whileNode) {
-
+      m_result = new While(
+	 m_codeExpander->ExpandExpression(whileNode->GetCondition()),
+	 m_codeExpander->ExpandBloc(whileNode->GetBloc())
+      );      
    }
    
    virtual void VisitMain(Main* mainNode) {
-
+      m_result = new Main(mainNode->GetBloc());
    }
 
    virtual void VisitType(Type * type) {
