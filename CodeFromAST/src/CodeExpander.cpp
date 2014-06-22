@@ -21,60 +21,25 @@ private:
 };
 
 
-class ExprFromBoolExpander : public EmptyVisitor {
-public:
-   ExprFromBoolExpander(CodeExpander* codeExpander) {
-      m_codeExpander = codeExpander;
-   }
-  
-   virtual void VisitExprFromBool(ExprFromBool* exprFromBool) {
-      m_result = new ExprFromBool(exprFromBool->GetValue());
-   }
-
-   ExprFromBool* GetResult() {
-      return m_result;
-   };
-
-private:
-   CodeExpander* m_codeExpander;
-   ExprFromBool* m_result;
-};
-
-class ExprFromIntExpander : public EmptyVisitor {
-public:
-   ExprFromIntExpander(CodeExpander* codeExpander) {
-      m_codeExpander = codeExpander;
-   }
-  
-   virtual void VisitExprFromInt(ExprFromInt* exprFromInt) {
-      m_result = new ExprFromInt(exprFromInt->GetValue());
-   }
-
-   ExprFromInt* GetResult() {
-      return m_result;
-   };
-
-private:
-   CodeExpander* m_codeExpander;
-   ExprFromInt* m_result;
-};
-
 class ExpressionExpander : public EmptyVisitor {
 public:
    ExpressionExpander(CodeExpander* codeExpander) {
       m_codeExpander = codeExpander;
    }
 
+
+   virtual void VisitExprFromVariable(ExprFromVariable* exprFromVariable) {
+      Variable* var = 
+	 m_codeExpander->ExpandVariable(exprFromVariable->GetVariable());
+      m_result = new ExprFromVariable(var);
+   }
+
    virtual void VisitExprFromInt(ExprFromInt* exprFromInt) {
-      m_result = m_codeExpander->ExpandExprFromInt(exprFromInt);
+      m_result =  new ExprFromInt(exprFromInt->GetValue() );
    }
 
    virtual void VisitExprFromBool(ExprFromBool* exprFromBool) {
-
-   }
-
-   virtual void VisitExprFromVariable(ExprFromVariable* exprFromVariable) {
-      
+      m_result =  new ExprFromBool(exprFromBool->GetValue() );
    }
 
    virtual void VisitParenthesizedExpr(ParenthesizedExpr* parenthesizedExpr) {
@@ -162,27 +127,14 @@ private:
    Expression* m_result;
 };
 
+
+
+
 Variable* CodeExpander::ExpandVariable(Variable* var) {
    VariableExpander* varExpander = new VariableExpander(this);
    var->Visit(varExpander);
    Variable* result = varExpander->GetResult();
    delete varExpander;
-   return result;
-}
-
-ExprFromBool* CodeExpander::ExpandExprFromBool(ExprFromBool* exprFromBool) {
-   ExprFromBoolExpander* exprExpander = new ExprFromBoolExpander(this);
-   exprFromBool->Visit(exprExpander);
-   ExprFromBool* result = exprExpander->GetResult();
-   delete exprExpander;
-   return result;
-}
-
-ExprFromInt* CodeExpander::ExpandExprFromInt(ExprFromInt* exprFromInt) {
-   ExprFromIntExpander* exprExpander = new ExprFromIntExpander(this);
-   exprFromInt->Visit(exprExpander);
-   ExprFromInt* result = exprExpander->GetResult();
-   delete exprExpander;
    return result;
 }
 
