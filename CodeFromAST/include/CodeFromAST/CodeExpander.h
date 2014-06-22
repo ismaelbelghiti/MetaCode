@@ -14,6 +14,8 @@ public:
    virtual Variable* ExpandVariable(Variable* var);
 
    virtual Expression* ExpandExpression(Expression* expr);
+
+   virtual CodeNode* ExpandCodeNode(CodeNode* codeNode);
 };
 
 #endif
