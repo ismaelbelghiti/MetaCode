@@ -140,7 +140,8 @@ public:
       int nbCodeNodes = bloc->GetNbCodeNodes();
       CodeNode** codeNode = new CodeNode*[nbCodeNodes];
       for(int iCodeNode = 0; iCodeNode < nbCodeNodes; iCodeNode++)
-	 codeNode[iCodeNode] = bloc->GetCodeNode(iCodeNode);
+	 codeNode[iCodeNode] = 
+	    m_codeExpander->ExpandCodeNode(bloc->GetCodeNode(iCodeNode));
       m_result = new Bloc(codeNode, nbCodeNodes);
    }
 
@@ -336,7 +337,12 @@ public:
    }
 
    virtual void VisitPrint(Print * print) {
-
+      int nbPrintables = print->GetNbPrintables();
+      Printable** printable = new Printable*[nbPrintables];
+      for(int iPrintable = 0; iPrintable < nbPrintables; iPrintable++)
+	 printable[iPrintable] = 
+	    m_codeExpander->ExpandPrintable(print->GetPrintable(iPrintable));
+      m_result = new Print(printable,nbPrintables,print->WithEndline());
    }
 
    virtual void VisitWhile(While* whileNode) {
