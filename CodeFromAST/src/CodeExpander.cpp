@@ -1,10 +1,6 @@
 #include "CodeFromAST/CodeExpander.h"
 #include "CodeFromAST/EmptyVisitor.h"
 
-///////////////
-// Expanders //
-///////////////
-
 class VariableExpander : public EmptyVisitor {
 public:
    VariableExpander(CodeExpander* codeExpander) {

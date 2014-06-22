@@ -1,6 +1,7 @@
 #include "CodeFromAST/PseudoCodePrinterVisitor.h"
 #include "CodeFromAST/CLikePrinterVisitor.h"
 #include "CodeFromAST/InfosGatherVisitor.h"
+#include "CodeFromAST/CodeExpander.h"
 
 // Some Utilities
 int count_args() { return 0; }
@@ -123,6 +124,9 @@ int main()
    bloc2->Visit(cVisitor);
    std::cout << std::endl;
 
+
+   CodeExpander* codeExpander = new CodeExpander();
+   codeExpander->ExpandCodeNode(bloc2)->Visit(pseudoCodeVisitor);
    //std::cout << "Indent Level:" << std::endl;
    //AbstractVisitor* info = new InfosGatherVisitor(bloc2);
    //std::cout << std::endl;

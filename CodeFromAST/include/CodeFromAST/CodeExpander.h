@@ -9,7 +9,7 @@
  * to ensure that no two distinct nodes share the same pointer
  * (except for Type nodes)
  */
-class CodeExpander : public AbstractVisitor {
+class CodeExpander {
 public:
    virtual Variable* ExpandVariable(Variable* var);
 
