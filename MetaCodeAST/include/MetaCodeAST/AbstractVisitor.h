@@ -42,28 +42,6 @@ public:
    virtual void VisitOr(Or * orNode) = 0;
 };
 
-class AbstractBlocVisitor {
-public:   
-   virtual void VisitBloc(Bloc* bloc) = 0;
-};
-
-class AbstractRangeVisitor {
-public:
-   virtual void VisitRange(Range * range) = 0;
-};
-
-class AbstractPrintableVisitor {
-public:
-   virtual void VisitPrintableFromString(PrintableFromString * printStr) = 0;
-
-   virtual void VisitPrintableFromExpression(PrintableFromExpression * printExpr) = 0;
-};
-
-class AbstractFunctionVisitor {
-public:
-   virtual void VisitFunction(Function * function) = 0;   
-};
-
 class AbstractStatementVisitor {
 public:
    virtual void VisitIf(If * ifNode) = 0;
@@ -87,21 +65,40 @@ public:
    virtual void VisitPrint(Print * print) = 0;
 };
 
-class AbstractSignatureVisitor {
-public:
-   virtual void VisitSignature(Signature * signature) = 0;
+
+class AbstractBlocVisitor {
+public:   
+   virtual void VisitBloc(Bloc* bloc) = 0;
 };
+
+class AbstractRangeVisitor {
+public:
+   virtual void VisitRange(Range * range) = 0;
+};
+
+class AbstractPrintableVisitor {
+public:
+   virtual void VisitPrintableFromString(PrintableFromString * printStr) = 0;
+
+   virtual void VisitPrintableFromExpression(PrintableFromExpression * printExpr) = 0;
+};
+
+
+class AbstractFunctionVisitor {
+public:
+//   virtual void VisitFunction(Function * function) = 0;   
+};
+
 
 class AbstractVisitor : 
    public AbstractTypeVisitor, 
    public AbstractVariableVisitor, 
    public AbstractExpressionVisitor, 
+   public AbstractStatementVisitor,
    public AbstractBlocVisitor, 
    public AbstractRangeVisitor,
    public AbstractPrintableVisitor,
-   public AbstractStatementVisitor,
-   public AbstractFunctionVisitor,
-   public AbstractSignatureVisitor 
+   public AbstractFunctionVisitor
 {};
 
 #endif

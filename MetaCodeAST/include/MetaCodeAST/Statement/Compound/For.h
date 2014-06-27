@@ -1,10 +1,9 @@
 #ifndef FOR_H
 #define FOR_H
 
-#include "Expression.h"
-#include "Bloc.h"
+#include "MetaCodeAST/InterfaceType.h"
 
-class Range : public CodeNode {
+class Range : public IRange {
 public:
    static const bool INCREASING = true;
    static const bool DECREASING = false;
@@ -12,17 +11,17 @@ public:
    // You have to specify an excluded end since Python can only deal with excluded end. 
    // When an includedEnd is specified, it is prefered to the excluded one in languages 
    // like C++/Java/...
-   Range(bool isIncreasing, Expression* start, Expression* excludedEnd, Expression* includedEnd = 0);
+   Range(bool isIncreasing, IExpression* start, IExpression* excludedEnd, IExpression* includedEnd = 0);
 
    virtual bool IsIncreasing();
 
-   virtual Expression* GetStart();
+   virtual IExpression* GetStart();
 
-   virtual Expression* GetExcludedEnd();
+   virtual IExpression* GetExcludedEnd();
 
    virtual bool IncludedEndIsDefined();
 
-   virtual Expression* GetIncludedEnd();
+   virtual IExpression* GetIncludedEnd();
 
    virtual void PrintDebug(int level = 0);
 
@@ -30,27 +29,27 @@ public:
 
 private:
    bool m_isIncreasing;
-   Expression *m_start, *m_excludedEnd, *m_includedEnd;
+   IExpression *m_start, *m_excludedEnd, *m_includedEnd;
 };
 
-class For : public CodeNode {
+class For : public IStatement {
 public:
-   For(Variable* variable, Range* range, Bloc* bloc);
+   For(IVariable* variable, IRange* range, IBloc* bloc);
       
-   virtual Variable* GetVariable();
+   virtual IVariable* GetVariable();
 
-   virtual Range* GetRange();
+   virtual IRange* GetRange();
 
-   virtual Bloc* GetBloc();
+   virtual IBloc* GetBloc();
 
    virtual void PrintDebug(int level = 0);
 
    virtual void Visit(AbstractVisitor* visitor);
 
 private:
-   Variable* m_variable;
-   Range* m_range;
-   Bloc* m_bloc;
+   IVariable* m_variable;
+   IRange* m_range;
+   IBloc* m_bloc;
 };
 
 #endif

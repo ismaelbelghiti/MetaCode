@@ -1,14 +1,15 @@
-#include "MetaCodeAST/While.h"
+#include "MetaCodeAST/Statement/Compound/While.h"
 #include "MetaCodeAST/AbstractVisitor.h"
+#include "MetaCodeAST/Utilities/indentation_space.h"
 
-While::While(Expression *condExpr, Bloc* bloc) {
+While::While(IExpression *condExpr, IBloc* bloc) {
    m_condExpr = condExpr;
    m_bloc = bloc;
 }
 
-Expression* While::GetCondition() { return m_condExpr; }
+IExpression* While::GetCondition() { return m_condExpr; }
 
-Bloc* While::GetBloc() { return m_bloc; }
+IBloc* While::GetBloc() { return m_bloc; }
 
 void While::PrintDebug(int level) {
    printIndent(level);

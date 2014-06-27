@@ -1,24 +1,25 @@
-#include "MetaCodeAST/Bloc.h"
+#include "MetaCodeAST/Bloc/Bloc.h"
 #include "MetaCodeAST/AbstractVisitor.h"
+#include "MetaCodeAST/Utilities/indentation_space.h"
 
-Bloc::Bloc(CodeNode** codeNode, int nbCodeNodes) {
-   m_codeNode = codeNode; 
-   m_nbCodeNodes = nbCodeNodes;
+Bloc::Bloc(IStatement** statement, int nbStatements) {
+   m_statement = statement; 
+   m_nbStatements = nbStatements;
 }
 
-int Bloc::GetNbCodeNodes() {
-   return m_nbCodeNodes; 
+int Bloc::GetNbStatements() {
+   return m_nbStatements; 
 }
 
-CodeNode* Bloc::GetCodeNode(int iCodeNode) {
-   return m_codeNode[iCodeNode];  
+IStatement* Bloc::GetStatement(int iStatement) {
+   return m_statement[iStatement];  
 }
 
 void Bloc::PrintDebug(int level) {
    printIndent(level);
    std::cout << "{" << std::endl;
-   for(int iCodeNode = 0; iCodeNode < GetNbCodeNodes(); iCodeNode++) {
-      GetCodeNode(iCodeNode)->PrintDebug(level+1);
+   for(int iStatement = 0; iStatement < GetNbStatements(); iStatement++) {
+      GetStatement(iStatement)->PrintDebug(level+1);
       std::cout << std::endl;
    }
    std::cout << "}" << std::endl;

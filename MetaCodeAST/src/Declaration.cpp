@@ -1,16 +1,17 @@
-#include "MetaCodeAST/Declaration.h"
+#include "MetaCodeAST/Statement/Instruction/Declaration.h"
 #include "MetaCodeAST/AbstractVisitor.h"
+#include "MetaCodeAST/Utilities/indentation_space.h"
 
-Declaration::Declaration(Variable* variable, Expression* expr) {     
+Declaration::Declaration(IVariable* variable, IExpression* expr) {     
    m_variable = variable;
    m_expr = expr;
 }
 
-Variable* Declaration::GetVariable() {
+IVariable* Declaration::GetVariable() {
    return m_variable;
 }
 
-Expression* Declaration::GetExpression() {
+IExpression* Declaration::GetExpression() {
    return m_expr;
 }
 

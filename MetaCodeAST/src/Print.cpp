@@ -1,11 +1,12 @@
-#include "MetaCodeAST/Print.h"
+#include "MetaCodeAST/Statement/Instruction/Print.h"
 #include "MetaCodeAST/AbstractVisitor.h"
+#include "MetaCodeAST/Utilities/indentation_space.h"
 
 std::string Printable::GetString() {
    return std::string();
 }
 
-Expression* Printable::GetExpression() { 
+IExpression* Printable::GetExpression() { 
    return 0; 
 }
 
@@ -32,7 +33,7 @@ void PrintableFromString::Visit(AbstractVisitor* visitor) {
 }
 
 
-PrintableFromExpression::PrintableFromExpression(Expression *expr) {
+PrintableFromExpression::PrintableFromExpression(IExpression *expr) {
    m_expr = expr;
 }
 
@@ -40,7 +41,7 @@ bool PrintableFromExpression::isExpression() {
    return true; 
 }
 
-Expression* PrintableFromExpression::GetExpression() {
+IExpression* PrintableFromExpression::GetExpression() {
    return m_expr;
 }
 
@@ -53,7 +54,7 @@ void PrintableFromExpression::Visit(AbstractVisitor* visitor) {
 }
 
 
-Print::Print(Printable** printable, int nbPrintables, bool withEndline ) {
+Print::Print(IPrintable** printable, int nbPrintables, bool withEndline ) {
    m_printable = printable;
    m_nbPrintables = nbPrintables;
    m_withEndline = withEndline;
@@ -63,7 +64,7 @@ int Print::GetNbPrintables() {
    return m_nbPrintables;
 }
 
-Printable* Print::GetPrintable(int iPrintable) {
+IPrintable* Print::GetPrintable(int iPrintable) {
    return m_printable[iPrintable];
 }
 

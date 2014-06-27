@@ -1,7 +1,7 @@
-#include "MetaCodeAST/For.h"
+#include "MetaCodeAST/Statement/Compound/For.h"
 #include "MetaCodeAST/AbstractVisitor.h"
-
-Range::Range(bool isIncreasing, Expression* start, Expression* excludedEnd, Expression* includedEnd) {
+#include "MetaCodeAST/Utilities/indentation_space.h"
+Range::Range(bool isIncreasing, IExpression* start, IExpression* excludedEnd, IExpression* includedEnd) {
    m_isIncreasing = isIncreasing;
    m_start = start;
    m_excludedEnd = excludedEnd;
@@ -10,13 +10,13 @@ Range::Range(bool isIncreasing, Expression* start, Expression* excludedEnd, Expr
 
 bool Range::IsIncreasing() { return m_isIncreasing; }
 
-Expression* Range::GetStart() { return m_start;}
+IExpression* Range::GetStart() { return m_start;}
 
-Expression* Range::GetExcludedEnd() { return m_excludedEnd; }
+IExpression* Range::GetExcludedEnd() { return m_excludedEnd; }
 
 bool Range::IncludedEndIsDefined() { return m_includedEnd != 0; }
 
-Expression* Range::GetIncludedEnd() { return m_includedEnd; }
+IExpression* Range::GetIncludedEnd() { return m_includedEnd; }
 
 void Range::PrintDebug(int level) {
    printIndent(level);
@@ -42,21 +42,21 @@ void Range::Visit(AbstractVisitor* visitor) {
 }
 
 
-For::For(Variable* variable, Range* range, Bloc* bloc) {
+For::For(IVariable* variable, IRange* range, IBloc* bloc) {
    m_variable = variable;
    m_range = range;
    m_bloc = bloc;
 }
       
-Variable* For::GetVariable() {
+IVariable* For::GetVariable() {
    return m_variable;
 }
 
-Range* For::GetRange() {
+IRange* For::GetRange() {
    return m_range; 
 }
 
-Bloc* For::GetBloc() { 
+IBloc* For::GetBloc() { 
    return m_bloc; 
 }
 

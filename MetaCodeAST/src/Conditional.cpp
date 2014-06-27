@@ -1,16 +1,17 @@
-#include "MetaCodeAST/Conditional.h"
+#include "MetaCodeAST/Statement/Compound/Conditional.h"
 #include "MetaCodeAST/AbstractVisitor.h"
+#include "MetaCodeAST/Utilities/indentation_space.h"
 
-If::If(Expression *condExpr, Bloc* bloc) {
+If::If(IExpression *condExpr, IBloc* bloc) {
    m_condExpr = condExpr;
    m_bloc = bloc;
 }
 
-Expression* If::GetCondition() {
+IExpression* If::GetCondition() {
    return m_condExpr; 
 }
 
-Bloc* If::GetBloc() {
+IBloc* If::GetBloc() {
    return m_bloc;
 }
 
@@ -26,16 +27,16 @@ void If::Visit(AbstractVisitor* visitor) {
    visitor->VisitIf(this);
 }
 
-ElseIf::ElseIf(Expression *condExpr, Bloc* bloc) {
+ElseIf::ElseIf(IExpression *condExpr, IBloc* bloc) {
    m_condExpr = condExpr;
    m_bloc = bloc;
 }
 
-Expression* ElseIf::GetCondition() {
+IExpression* ElseIf::GetCondition() {
    return m_condExpr;
 }
 
-Bloc* ElseIf::GetBloc() {
+IBloc* ElseIf::GetBloc() {
    return m_bloc;
 }
 
@@ -51,10 +52,9 @@ void ElseIf::Visit(AbstractVisitor* visitor) {
    visitor->VisitElseIf(this);
 }
 
+Else::Else(IBloc* bloc) {}
 
-Else::Else(Bloc* bloc) {}
-
-Bloc* Else::GetBloc() {
+IBloc* Else::GetBloc() {
    return m_bloc;
 }
 

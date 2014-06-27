@@ -1,19 +1,21 @@
 #ifndef META_CODE_AST_H
 #define META_CODE_AST_H
 
-#include "MetaCodeAST/indentation_space.h"
-#include "MetaCodeAST/CodeNode.h"
-#include "MetaCodeAST/Bloc.h"
-#include "MetaCodeAST/Variable.h"
-#include "MetaCodeAST/Expression.h"
-#include "MetaCodeAST/Declaration.h"
-#include "MetaCodeAST/While.h"
-#include "MetaCodeAST/For.h"
-#include "MetaCodeAST/Conditional.h"
-#include "MetaCodeAST/Print.h"
-#include "MetaCodeAST/IncludeLib.h"
-#include "MetaCodeAST/Main.h"
-#include "MetaCodeAST/Function.h"
+#include "MetaCodeAST/Utilities/indentation_space.h"
+
+#include "MetaCodeAST/Type/Type.h"
+#include "MetaCodeAST/Variable/Variable.h"
+#include "MetaCodeAST/Expression/Expression.h"
+#include "MetaCodeAST/Bloc/Bloc.h"
+#include "MetaCodeAST/Statement/Compound/While.h"
+#include "MetaCodeAST/Statement/Compound/For.h"
+#include "MetaCodeAST/Statement/Compound/Conditional.h"
+#include "MetaCodeAST/Statement/Compound/Main.h"
+#include "MetaCodeAST/Statement/Compound/Function.h"
+#include "MetaCodeAST/Statement/Instruction/Declaration.h"
+#include "MetaCodeAST/Statement/Instruction/Print.h"
+#include "MetaCodeAST/Statement/Instruction/IncludeLib.h"
+
 #include "MetaCodeAST/AbstractVisitor.h"
 
 #endif

@@ -1,20 +1,15 @@
 #ifndef EXPRESSION_H
 #define EXPRESSION_H
 
-#include "Variable.h"
+#include "MetaCodeAST/InterfaceType.h"
 
-class Expression : public CodeNode {
-public:
-   virtual Type* GetType() = 0;
-};
-
-class ExprFromInt : public Expression {
+class ExprFromInt : public IExpression {
 public:
    ExprFromInt(int value);
 
    virtual int GetValue();
 
-   virtual Type* GetType();
+   virtual IType* GetType();
 
    virtual void PrintDebug(int level = 0);
 
@@ -24,13 +19,13 @@ private:
    int m_value;
 };
 
-class ExprFromBool : public Expression {
+class ExprFromBool : public IExpression {
 public:
    ExprFromBool(bool value);
 
    virtual bool GetValue();
 
-   virtual Type* GetType();
+   virtual IType* GetType();
 
    virtual void PrintDebug(int level = 0);
 
@@ -40,55 +35,55 @@ private:
    bool m_value;
 };
 
-class ExprFromVariable : public Expression {
+class ExprFromVariable : public IExpression {
 public:
-   ExprFromVariable(Variable* variable);
+   ExprFromVariable(IVariable* variable);
 
-   Variable* GetVariable();
+   IVariable* GetVariable();
 
-   virtual Type* GetType();
+   virtual IType* GetType();
 
    virtual void PrintDebug(int level = 0);
 
    virtual void Visit(AbstractVisitor* visitor);
 
 private:
-   Variable* m_variable;
+   IVariable* m_variable;
 };
 
 /////////////////////
 // Unary Operation //
 /////////////////////
 
-class UnaryOperation : public Expression {
+class UnaryOperation : public IExpression {
 public:
-   UnaryOperation(Expression* expr);
+   UnaryOperation(IExpression* expr);
 
-   virtual Expression* GetExpression();
+   virtual IExpression* GetExpression();
 
 private:
-   Expression* m_expr;
+  IExpression* m_expr;
 };
 
 class ParenthesizedExpr : public UnaryOperation {
 public:
-   ParenthesizedExpr(Expression* expr);
+   ParenthesizedExpr(IExpression* expr);
 
-   virtual Type* GetType();
+   virtual IType* GetType();
 
    virtual void PrintDebug(int level = 0);
 
    virtual void Visit(AbstractVisitor* visitor);
 
 private:
-   Expression* m_expr;
+  IExpression* m_expr;
 };
 
 class Minus : public UnaryOperation {
 public:
-   Minus(Expression* expr);
+   Minus(IExpression* expr);
 
-   virtual Type* GetType();
+   virtual IType* GetType();
 
    virtual void PrintDebug(int level = 0);
 
@@ -97,9 +92,9 @@ public:
 
 class Negation : public UnaryOperation {
 public:
-   Negation(Expression* expr);
+   Negation(IExpression* expr);
 
-   virtual Type* GetType();
+   virtual IType* GetType();
 
    virtual void PrintDebug(int level = 0);
 
@@ -110,27 +105,27 @@ public:
 // Binary Operation //
 //////////////////////
 
-class BinaryOperation : public Expression {
+class BinaryOperation : public IExpression {
 public:
-   BinaryOperation(Expression* leftExpr, Expression* rightExpr);
+   BinaryOperation(IExpression* leftExpr,IExpression* rightExpr);
 
-   Expression* GetLeftExpr();
+  IExpression* GetLeftExpr();
 
-   Expression* GetRightExpr();
+  IExpression* GetRightExpr();
    
    virtual std::string GetSymbol() = 0;
 
    virtual void PrintDebug(int level = 0);
 
 private:
-   Expression *m_leftExpr, *m_rightExpr;
+  IExpression *m_leftExpr, *m_rightExpr;
 };
 
 class Addition : public BinaryOperation {
 public:
-   Addition(Expression* leftExpr, Expression* rightExpr);
+   Addition(IExpression* leftExpr,IExpression* rightExpr);
    
-   virtual Type* GetType();
+   virtual IType* GetType();
 
    virtual std::string GetSymbol();
 
@@ -139,9 +134,9 @@ public:
 
 class Multiplication : public BinaryOperation {
 public:
-   Multiplication(Expression* leftExpr, Expression* rightExpr);
+   Multiplication(IExpression* leftExpr,IExpression* rightExpr);
 
-   virtual Type* GetType();
+   virtual IType* GetType();
 
    virtual std::string GetSymbol();
 
@@ -150,9 +145,9 @@ public:
 
 class Substraction : public BinaryOperation {
 public:
-   Substraction(Expression* leftExpr, Expression* rightExpr);
+   Substraction(IExpression* leftExpr,IExpression* rightExpr);
 
-   virtual Type* GetType();
+   virtual IType* GetType();
 
    virtual std::string GetSymbol();
 
@@ -161,9 +156,9 @@ public:
 
 class EuclidianDivision : public BinaryOperation {
 public:
-   EuclidianDivision(Expression* leftExpr, Expression* rightExpr);
+   EuclidianDivision(IExpression* leftExpr,IExpression* rightExpr);
 
-   virtual Type* GetType();
+   virtual IType* GetType();
 
    virtual std::string GetSymbol();
 
@@ -173,9 +168,9 @@ public:
 
 class Modulus : public BinaryOperation {
 public:
-   Modulus(Expression* leftExpr, Expression* rightExpr);
+   Modulus(IExpression* leftExpr,IExpression* rightExpr);
 
-   virtual Type* GetType();
+   virtual IType* GetType();
 
    virtual std::string GetSymbol();
 
@@ -184,9 +179,9 @@ public:
 
 class And : public BinaryOperation {
 public:
-   And(Expression* leftExpr, Expression* rightExpr);
+   And(IExpression* leftExpr,IExpression* rightExpr);
 
-   virtual Type* GetType();
+   virtual IType* GetType();
 
    virtual std::string GetSymbol();
 
@@ -195,9 +190,9 @@ public:
 
 class Or : public BinaryOperation {
 public:
-   Or(Expression* leftExpr, Expression* rightExpr);
+   Or(IExpression* leftExpr,IExpression* rightExpr);
 
-   virtual Type* GetType();
+   virtual IType* GetType();
 
    virtual std::string GetSymbol();
 

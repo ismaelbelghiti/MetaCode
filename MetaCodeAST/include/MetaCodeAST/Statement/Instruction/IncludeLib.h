@@ -1,9 +1,9 @@
 #ifndef LIB_H
 #define LIB_H
 
-#include "CodeNode.h"
+#include "MetaCodeAST/InterfaceType.h"
 
-class IncludeLib : public CodeNode {
+class IncludeLib : public IStatement {
 public:
    IncludeLib(std::string name);
 

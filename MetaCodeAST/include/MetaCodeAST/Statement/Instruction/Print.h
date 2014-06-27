@@ -1,18 +1,18 @@
 #ifndef PRINT_H
 #define PRINT_H
 
-#include "Expression.h"
+#include "MetaCodeAST/InterfaceType.h"
 
-class Printable : public CodeNode {
+class Printable : public IPrintable {
 public:
    virtual bool isExpression() = 0;
 
    virtual std::string GetString();
 
-   virtual Expression* GetExpression();
+   virtual IExpression* GetExpression();
 };
 
-class PrintableFromString : public Printable {
+class PrintableFromString : public IPrintable {
 public:
    PrintableFromString(std::string text);
 
@@ -28,32 +28,32 @@ private:
    std::string m_text;
 };
 
-class PrintableFromExpression : public Printable {
+class PrintableFromExpression : public IPrintable {
 public:
-   PrintableFromExpression(Expression *expr);
+   PrintableFromExpression(IExpression *expr);
 
    virtual bool isExpression();
 
-   virtual Expression* GetExpression();
+   virtual IExpression* GetExpression();
 
    virtual void PrintDebug(int level = 0);
 
    virtual void Visit(AbstractVisitor* visitor);
 
 private:
-   Expression* m_expr;
+   IExpression* m_expr;
 };
 
-class Print : public CodeNode {
+class Print : public IStatement {
 public:
    static const bool ENDLINE = true;
    static const bool NO_ENDLINE = false;
 
-   Print(Printable** printable, int nbPrintables, bool withEndline = true);   
+   Print(IPrintable** printable, int nbPrintables, bool withEndline = true);   
 
    virtual int GetNbPrintables();
 
-   virtual Printable* GetPrintable(int iPrintable);
+   virtual IPrintable* GetPrintable(int iPrintable);
 
    virtual bool WithEndline();
 
@@ -63,7 +63,7 @@ public:
 
 private:
    int m_nbPrintables;
-   Printable** m_printable;
+   IPrintable** m_printable;
    bool m_withEndline;
 };
 

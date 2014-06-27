@@ -1,6 +1,6 @@
-#include "MetaCodeAST/Expression.h"
+#include "MetaCodeAST/Expression/Expression.h"
 #include "MetaCodeAST/AbstractVisitor.h"
-
+#include "MetaCodeAST/Utilities/indentation_space.h"
 ExprFromInt::ExprFromInt(int value) {
    m_value = value;
 }
@@ -9,7 +9,7 @@ int ExprFromInt::GetValue() {
    return m_value;
 }
 
-Type* ExprFromInt::GetType() {
+IType* ExprFromInt::GetType() {
    return cInt;
 }
 
@@ -31,7 +31,7 @@ bool ExprFromBool::GetValue() {
    return m_value;
 }
 
-Type* ExprFromBool::GetType() {
+IType* ExprFromBool::GetType() {
    return cBool;
 }
 
@@ -48,15 +48,15 @@ void ExprFromBool::Visit(AbstractVisitor* visitor) {
 }
 
 
-ExprFromVariable::ExprFromVariable(Variable* variable) {
+ExprFromVariable::ExprFromVariable(IVariable* variable) {
    m_variable = variable;
 }
 
-Variable* ExprFromVariable::GetVariable() {
+IVariable* ExprFromVariable::GetVariable() {
    return m_variable;
 }
 
-Type* ExprFromVariable::GetType() {
+IType* ExprFromVariable::GetType() {
    return GetVariable()->GetType();
 }
 
@@ -74,18 +74,18 @@ void ExprFromVariable::Visit(AbstractVisitor* visitor) {
 /////////////////////
 
 
-UnaryOperation::UnaryOperation(Expression* expr) {
+UnaryOperation::UnaryOperation(IExpression* expr) {
    m_expr = expr;
 }
 
-Expression* UnaryOperation::GetExpression() {
+IExpression* UnaryOperation::GetExpression() {
    return m_expr;
 }
 
 
-ParenthesizedExpr::ParenthesizedExpr(Expression* expr) : UnaryOperation(expr) { }
+ParenthesizedExpr::ParenthesizedExpr(IExpression* expr) : UnaryOperation(expr) { }
 
-Type* ParenthesizedExpr::GetType() {
+IType* ParenthesizedExpr::GetType() {
    return GetExpression()->GetType();
 }
 
@@ -101,9 +101,9 @@ void ParenthesizedExpr::Visit(AbstractVisitor* visitor) {
 }
 
 
-Minus::Minus(Expression* expr) : UnaryOperation(expr) {}
+Minus::Minus(IExpression* expr) : UnaryOperation(expr) {}
 
-Type* Minus::GetType() {
+IType* Minus::GetType() {
    return GetExpression()->GetType();
 }
 
@@ -118,9 +118,9 @@ void Minus::Visit(AbstractVisitor* visitor) {
 }
    
 
-Negation::Negation(Expression* expr) : UnaryOperation(expr) {}
+Negation::Negation(IExpression* expr) : UnaryOperation(expr) {}
 
-Type* Negation::GetType() {
+IType* Negation::GetType() {
    return cBool;
 }
 
@@ -139,16 +139,16 @@ void Negation::Visit(AbstractVisitor* visitor) {
 // Binary Operation //
 //////////////////////
 
-BinaryOperation::BinaryOperation(Expression* leftExpr, Expression* rightExpr) {
+BinaryOperation::BinaryOperation(IExpression* leftExpr, IExpression* rightExpr) {
    m_leftExpr = leftExpr;
    m_rightExpr = rightExpr;
 }
 
-Expression* BinaryOperation::GetLeftExpr() {
+IExpression* BinaryOperation::GetLeftExpr() {
    return m_leftExpr;
 }
 
-Expression* BinaryOperation::GetRightExpr() {
+IExpression* BinaryOperation::GetRightExpr() {
    return m_rightExpr;
 }
 
@@ -159,10 +159,10 @@ void BinaryOperation::PrintDebug(int level) {
    GetRightExpr()->PrintDebug();
 }
   
-Addition::Addition(Expression* leftExpr, Expression* rightExpr) 
+Addition::Addition(IExpression* leftExpr, IExpression* rightExpr) 
    : BinaryOperation(leftExpr,rightExpr) {}
    
-Type* Addition::GetType() {
+IType* Addition::GetType() {
    return GetLeftExpr()->GetType();
 }
 
@@ -175,10 +175,10 @@ void Addition::Visit(AbstractVisitor* visitor) {
 }
 
 
-Multiplication::Multiplication(Expression* leftExpr, Expression* rightExpr) 
+Multiplication::Multiplication(IExpression* leftExpr, IExpression* rightExpr) 
    : BinaryOperation(leftExpr,rightExpr) {}
 
-Type* Multiplication::GetType() {
+IType* Multiplication::GetType() {
    return GetLeftExpr()->GetType();
 }
 
@@ -190,10 +190,10 @@ void Multiplication::Visit(AbstractVisitor* visitor) {
    visitor->VisitMultiplication(this);
 }
 
-Substraction::Substraction(Expression* leftExpr, Expression* rightExpr) 
+Substraction::Substraction(IExpression* leftExpr, IExpression* rightExpr) 
    : BinaryOperation(leftExpr,rightExpr) {}
 
-Type* Substraction::GetType() {
+IType* Substraction::GetType() {
    return GetLeftExpr()->GetType();
 }
 
@@ -206,11 +206,10 @@ void Substraction::Visit(AbstractVisitor* visitor) {
 }
 
 
-
-EuclidianDivision::EuclidianDivision(Expression* leftExpr, Expression* rightExpr) 
+EuclidianDivision::EuclidianDivision(IExpression* leftExpr, IExpression* rightExpr) 
    : BinaryOperation(leftExpr,rightExpr) {}
 
-Type* EuclidianDivision::GetType() {
+IType* EuclidianDivision::GetType() {
    return cInt;
 }
 
@@ -223,10 +222,10 @@ void EuclidianDivision::Visit(AbstractVisitor* visitor) {
 }
 
 
-Modulus::Modulus(Expression* leftExpr, Expression* rightExpr) 
+Modulus::Modulus(IExpression* leftExpr, IExpression* rightExpr) 
    : BinaryOperation(leftExpr,rightExpr) {}
 
-Type* Modulus::GetType() {
+IType* Modulus::GetType() {
    return cInt;
 }
 
@@ -239,10 +238,10 @@ void Modulus::Visit(AbstractVisitor* visitor) {
 }
 
 
-And::And(Expression* leftExpr, Expression* rightExpr) 
+And::And(IExpression* leftExpr, IExpression* rightExpr) 
    : BinaryOperation(leftExpr,rightExpr) {}
 
-Type* And::GetType() { return cBool; }
+IType* And::GetType() { return cBool; }
 
 std::string And::GetSymbol() { return "&&"; }
 
@@ -251,10 +250,10 @@ void And::Visit(AbstractVisitor* visitor) {
 }
 
 
-Or::Or(Expression* leftExpr, Expression* rightExpr) 
+Or::Or(IExpression* leftExpr, IExpression* rightExpr) 
    : BinaryOperation(leftExpr,rightExpr) {}
 
-Type* Or::GetType() { return cBool; }
+IType* Or::GetType() { return cBool; }
 
 std::string Or::GetSymbol() { return "||"; }
 

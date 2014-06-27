@@ -1,9 +1,10 @@
-#include "MetaCodeAST/Main.h"
+#include "MetaCodeAST/Statement/Compound/Main.h"
 #include "MetaCodeAST/AbstractVisitor.h"
+#include "MetaCodeAST/Utilities/indentation_space.h"
 
-Main::Main(Bloc* bloc) {}
+Main::Main(IBloc* bloc) {}
 
-Bloc* Main::GetBloc() { return m_bloc; }
+IBloc* Main::GetBloc() { return m_bloc; }
 
 void Main::PrintDebug(int level) {
    printIndent(level);

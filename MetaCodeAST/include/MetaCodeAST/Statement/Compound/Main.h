@@ -1,21 +1,20 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include "CodeNode.h"
-#include "Bloc.h"
+#include "MetaCodeAST/InterfaceType.h"
 
-class Main : public CodeNode {
+class Main : public IStatement {
 public:
-   Main(Bloc* bloc);
+   Main(IBloc* bloc);
 
-   virtual Bloc* GetBloc();
+   virtual IBloc* GetBloc();
 
    virtual void PrintDebug(int level = 0);
 
    virtual void Visit(AbstractVisitor* visitor);
 
 private:
-   Bloc* m_bloc;
+   IBloc* m_bloc;
 };
 
 #endif
