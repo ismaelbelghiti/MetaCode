@@ -19,6 +19,8 @@
 #include "MetaCodeAST/Constructions/Statement/Instruction/IncludeLib.h"
 
 #include "MetaCodeAST/Visitors/AbstractVisitor.h"
+#include "MetaCodeAST/Visitors/BasicVisitor.h"
+
 #include "MetaCodeAST/Transformers/AbstractTransformer.h"
 
 #endif

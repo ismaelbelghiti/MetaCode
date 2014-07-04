@@ -23,7 +23,4 @@ void Bloc::PrintDebug(int level) {
    std::cout << "}" << std::endl;
 }
 
-void Bloc::Visit(AbstractVisitor* visitor) {
-   visitor->VisitBloc(this);
-}
 

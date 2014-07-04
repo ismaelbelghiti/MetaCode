@@ -58,7 +58,6 @@ public:
 
 
 
-
 // Intermediates Constructions, used for convenience
 
 class IBloc {

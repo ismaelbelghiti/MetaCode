@@ -13,8 +13,6 @@ public:
 
    virtual void PrintDebug(int level = 0);
 
-   virtual void Visit(AbstractVisitor* visitor);
-
 private:
    IStatement** m_statement;
    int m_nbStatements;

@@ -25,8 +25,6 @@ public:
 
    virtual void PrintDebug(int level = 0);
 
-   virtual void Visit(AbstractVisitor* visitor);
-
 private:
    bool m_isIncreasing;
    IExpression *m_start, *m_excludedEnd, *m_includedEnd;

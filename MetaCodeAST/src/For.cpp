@@ -36,11 +36,6 @@ void Range::PrintDebug(int level) {
 	 
 }
 
-void Range::Visit(AbstractVisitor* visitor) {
-   visitor->VisitRange(this);
-}
-
-
 
 For::For(IVariable* variable, IRange* range, IBloc* bloc) {
    m_variable = variable;

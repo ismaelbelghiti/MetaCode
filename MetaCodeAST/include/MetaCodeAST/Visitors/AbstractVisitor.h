@@ -66,39 +66,11 @@ public:
 };
 
 
-class AbstractBlocVisitor {
-public:   
-   virtual void VisitBloc(Bloc* bloc) = 0;
-};
-
-class AbstractRangeVisitor {
-public:
-   virtual void VisitRange(Range * range) = 0;
-};
-
-class AbstractPrintableVisitor {
-public:
-   virtual void VisitPrintableFromString(PrintableFromString * printStr) = 0;
-
-   virtual void VisitPrintableFromExpression(PrintableFromExpression * printExpr) = 0;
-};
-
-
-class AbstractFunctionVisitor {
-public:
-//   virtual void VisitFunction(Function * function) = 0;   
-};
-
-
 class AbstractVisitor : 
    public AbstractTypeVisitor, 
    public AbstractVariableVisitor, 
    public AbstractExpressionVisitor, 
-   public AbstractStatementVisitor,
-   public AbstractBlocVisitor, 
-   public AbstractRangeVisitor,
-   public AbstractPrintableVisitor,
-   public AbstractFunctionVisitor
+   public AbstractStatementVisitor
 {};
 
 #endif
