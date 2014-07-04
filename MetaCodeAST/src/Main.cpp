@@ -1,7 +1,4 @@
-#include "MetaCodeAST/Statement/Compound/Main.h"
-#include "MetaCodeAST/AbstractVisitor.h"
-#include "MetaCodeAST/Statement/AbstractStatementTransformer.h"
-#include "MetaCodeAST/Utilities/indentation_space.h"
+#include "MetaCodeAST.h"
 
 Main::Main(IBloc* bloc) {}
 

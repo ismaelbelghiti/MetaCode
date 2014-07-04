@@ -1,7 +1,4 @@
-#include "MetaCodeAST/Statement/Compound/Conditional.h"
-#include "MetaCodeAST/AbstractVisitor.h"
-#include "MetaCodeAST/Statement/AbstractStatementTransformer.h"
-#include "MetaCodeAST/Utilities/indentation_space.h"
+#include "MetaCodeAST.h"
 
 If::If(IExpression *condExpr, IBloc* bloc) {
    m_condExpr = condExpr;

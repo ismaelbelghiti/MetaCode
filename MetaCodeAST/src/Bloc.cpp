@@ -1,6 +1,4 @@
-#include "MetaCodeAST/Utilities/Bloc.h"
-#include "MetaCodeAST/AbstractVisitor.h"
-#include "MetaCodeAST/Utilities/indentation_space.h"
+#include "MetaCodeAST.h"
 
 Bloc::Bloc(IStatement** statement, int nbStatements) {
    m_statement = statement; 

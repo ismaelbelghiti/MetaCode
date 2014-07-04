@@ -1,7 +1,4 @@
-#include "MetaCodeAST/Statement/Compound/Function.h"
-#include "MetaCodeAST/AbstractVisitor.h"
-#include "MetaCodeAST/Statement/AbstractStatementTransformer.h"
-#include "MetaCodeAST/Utilities/indentation_space.h"
+#include "MetaCodeAST.h"
    
 FunctionDeclaration::FunctionDeclaration(IVariable* var, IVariable** arg, int nbArgs,  IBloc* bloc) {
    m_var = var;

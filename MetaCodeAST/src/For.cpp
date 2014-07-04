@@ -1,7 +1,4 @@
-#include "MetaCodeAST/Statement/Compound/For.h"
-#include "MetaCodeAST/AbstractVisitor.h"
-#include "MetaCodeAST/Statement/AbstractStatementTransformer.h"
-#include "MetaCodeAST/Utilities/indentation_space.h"
+#include "MetaCodeAST.h"
 
 Range::Range(bool isIncreasing, IExpression* start, IExpression* excludedEnd, IExpression* includedEnd) {
    m_isIncreasing = isIncreasing;

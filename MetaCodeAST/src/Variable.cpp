@@ -1,8 +1,4 @@
-#include "MetaCodeAST/Variable/Variable.h"
-#include "MetaCodeAST/AbstractVisitor.h"
-#include "MetaCodeAST/Variable/AbstractVariableTransformer.h"
-#include "MetaCodeAST/Utilities/indentation_space.h"
-
+#include "MetaCodeAST.h"
 
 
 Variable::Variable(std::string name, IType* type) { 

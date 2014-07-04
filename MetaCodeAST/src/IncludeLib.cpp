@@ -1,7 +1,4 @@
-#include "MetaCodeAST/Statement/Instruction/IncludeLib.h"
-#include "MetaCodeAST/AbstractVisitor.h"
-#include "MetaCodeAST/Statement/AbstractStatementTransformer.h"
-#include "MetaCodeAST/Utilities/indentation_space.h"
+#include "MetaCodeAST.h"
 
 IncludeLib::IncludeLib(std::string name) { 
    m_name = name; 

@@ -1,8 +1,4 @@
-#include "MetaCodeAST/Type/Type.h"
-#include "MetaCodeAST/AbstractVisitor.h"
-#include "MetaCodeAST/Type/AbstractTypeTransformer.h"
-#include "MetaCodeAST/Utilities/indentation_space.h"
-
+#include "MetaCodeAST.h"
 
 Type::Type(std::string typeName) {
    m_typeName = typeName;

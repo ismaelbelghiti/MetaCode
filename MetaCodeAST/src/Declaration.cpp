@@ -1,7 +1,4 @@
-#include "MetaCodeAST/Statement/Instruction/Declaration.h"
-#include "MetaCodeAST/AbstractVisitor.h"
-#include "MetaCodeAST/Statement/AbstractStatementTransformer.h"
-#include "MetaCodeAST/Utilities/indentation_space.h"
+#include "MetaCodeAST.h"
 
 Declaration::Declaration(IVariable* variable, IExpression* expr) {     
    m_variable = variable;

@@ -1,7 +1,4 @@
-#include "MetaCodeAST/Expression/Expression.h"
-#include "MetaCodeAST/AbstractVisitor.h"
-#include "MetaCodeAST/Expression/AbstractExpressionTransformer.h"
-#include "MetaCodeAST/Utilities/indentation_space.h"
+#include "MetaCodeAST.h"
 
 ExprFromInt::ExprFromInt(int value) {
    m_value = value;

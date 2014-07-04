@@ -1,7 +1,4 @@
-#include "MetaCodeAST/Statement/Instruction/Print.h"
-#include "MetaCodeAST/AbstractVisitor.h"
-#include "MetaCodeAST/Statement/AbstractStatementTransformer.h"
-#include "MetaCodeAST/Utilities/indentation_space.h"
+#include "MetaCodeAST.h"
 
 
 PrintableFromString::PrintableFromString(std::string text) { 

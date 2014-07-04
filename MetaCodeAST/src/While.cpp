@@ -1,7 +1,4 @@
-#include "MetaCodeAST/Statement/Compound/While.h"
-#include "MetaCodeAST/AbstractVisitor.h"
-#include "MetaCodeAST/Statement/AbstractStatementTransformer.h"
-#include "MetaCodeAST/Utilities/indentation_space.h"
+#include "MetaCodeAST.h"
 
 While::While(IExpression *condExpr, IBloc* bloc) {
    m_condExpr = condExpr;
