@@ -1,5 +1,6 @@
 #include "MetaCodeAST/Statement/Compound/Main.h"
 #include "MetaCodeAST/AbstractVisitor.h"
+#include "MetaCodeAST/Statement/AbstractStatementTransformer.h"
 #include "MetaCodeAST/Utilities/indentation_space.h"
 
 Main::Main(IBloc* bloc) {}
@@ -14,4 +15,8 @@ void Main::PrintDebug(int level) {
    
 void Main::Visit(AbstractVisitor* visitor) {
    visitor->VisitMain(this);
+}
+
+IStatement* Main::TransformStatement(AbstractStatementTransformer* transformer) {
+   return transformer->TransformMain(this);
 }

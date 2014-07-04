@@ -1,14 +1,8 @@
 #include "MetaCodeAST/Statement/Instruction/Print.h"
 #include "MetaCodeAST/AbstractVisitor.h"
+#include "MetaCodeAST/Statement/AbstractStatementTransformer.h"
+#include "MetaCodeAST/Printable/AbstractPrintableTransformer.h"
 #include "MetaCodeAST/Utilities/indentation_space.h"
-
-std::string Printable::GetString() {
-   return std::string();
-}
-
-IExpression* Printable::GetExpression() { 
-   return 0; 
-}
 
 
 PrintableFromString::PrintableFromString(std::string text) { 
@@ -23,6 +17,10 @@ std::string PrintableFromString::GetString() {
    return m_text; 
 }
 
+IExpression* PrintableFromString::GetExpression() {
+   return 0;
+}
+
 void PrintableFromString::PrintDebug(int level) {
    printIndent(level);
    std::cout << "\""  << GetString() << "\"";
@@ -32,6 +30,9 @@ void PrintableFromString::Visit(AbstractVisitor* visitor) {
    visitor->VisitPrintableFromString(this);
 }
 
+IPrintable* PrintableFromString::TransformPrintable(AbstractPrintableTransformer* transformer) {
+   return transformer->TransformPrintableFromString(this);
+}
 
 PrintableFromExpression::PrintableFromExpression(IExpression *expr) {
    m_expr = expr;
@@ -40,6 +41,11 @@ PrintableFromExpression::PrintableFromExpression(IExpression *expr) {
 bool PrintableFromExpression::isExpression() { 
    return true; 
 }
+
+std::string PrintableFromExpression::GetString() {
+   return std::string(); 
+}
+
 
 IExpression* PrintableFromExpression::GetExpression() {
    return m_expr;
@@ -53,6 +59,9 @@ void PrintableFromExpression::Visit(AbstractVisitor* visitor) {
    visitor->VisitPrintableFromExpression(this);
 }
 
+IPrintable* PrintableFromExpression::TransformPrintable(AbstractPrintableTransformer* transformer) {
+   return transformer->TransformPrintableFromExpression(this);
+}
 
 Print::Print(IPrintable** printable, int nbPrintables, bool withEndline ) {
    m_printable = printable;
@@ -85,4 +94,8 @@ void Print::PrintDebug(int level) {
 
 void Print::Visit(AbstractVisitor* visitor) {
    visitor->VisitPrint(this);
+}
+
+IStatement* Print::TransformStatement(AbstractStatementTransformer* transformer) {
+   return transformer->TransformPrint(this);
 }

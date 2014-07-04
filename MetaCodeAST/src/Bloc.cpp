@@ -1,4 +1,4 @@
-#include "MetaCodeAST/Bloc/Bloc.h"
+#include "MetaCodeAST/Utilities/Bloc.h"
 #include "MetaCodeAST/AbstractVisitor.h"
 #include "MetaCodeAST/Utilities/indentation_space.h"
 
@@ -28,3 +28,4 @@ void Bloc::PrintDebug(int level) {
 void Bloc::Visit(AbstractVisitor* visitor) {
    visitor->VisitBloc(this);
 }
+

@@ -15,6 +15,8 @@ public:
 
    virtual void Visit(AbstractVisitor* visitor);
 
+   virtual IExpression* TransformExpression(AbstractExpressionTransformer* transformer);
+
 private:
    int m_value;
 };
@@ -31,6 +33,8 @@ public:
 
    virtual void Visit(AbstractVisitor* visitor);
 
+   virtual IExpression* TransformExpression(AbstractExpressionTransformer* transformer);
+
 private:
    bool m_value;
 };
@@ -46,6 +50,8 @@ public:
    virtual void PrintDebug(int level = 0);
 
    virtual void Visit(AbstractVisitor* visitor);
+
+   virtual IExpression* TransformExpression(AbstractExpressionTransformer* transformer);
 
 private:
    IVariable* m_variable;
@@ -75,6 +81,8 @@ public:
 
    virtual void Visit(AbstractVisitor* visitor);
 
+   virtual IExpression* TransformExpression(AbstractExpressionTransformer* transformer);
+
 private:
   IExpression* m_expr;
 };
@@ -88,6 +96,8 @@ public:
    virtual void PrintDebug(int level = 0);
 
    virtual void Visit(AbstractVisitor* visitor);
+
+   virtual IExpression* TransformExpression(AbstractExpressionTransformer* transformer);
 };
 
 class Negation : public UnaryOperation {
@@ -99,6 +109,8 @@ public:
    virtual void PrintDebug(int level = 0);
 
    virtual void Visit(AbstractVisitor* visitor);
+
+   virtual IExpression* TransformExpression(AbstractExpressionTransformer* transformer);
 };
 
 //////////////////////
@@ -130,6 +142,8 @@ public:
    virtual std::string GetSymbol();
 
    virtual void Visit(AbstractVisitor* visitor);
+
+   virtual IExpression* TransformExpression(AbstractExpressionTransformer* transformer);
 };
 
 class Multiplication : public BinaryOperation {
@@ -141,6 +155,8 @@ public:
    virtual std::string GetSymbol();
 
    virtual void Visit(AbstractVisitor* visitor);
+
+   virtual IExpression* TransformExpression(AbstractExpressionTransformer* transformer);
 };
 
 class Substraction : public BinaryOperation {
@@ -152,6 +168,8 @@ public:
    virtual std::string GetSymbol();
 
    virtual void Visit(AbstractVisitor* visitor);
+
+   virtual IExpression* TransformExpression(AbstractExpressionTransformer* transformer);
 };
 
 class EuclidianDivision : public BinaryOperation {
@@ -163,6 +181,8 @@ public:
    virtual std::string GetSymbol();
 
    virtual void Visit(AbstractVisitor* visitor);
+
+   virtual IExpression* TransformExpression(AbstractExpressionTransformer* transformer);
 };
 
 
@@ -175,6 +195,8 @@ public:
    virtual std::string GetSymbol();
 
    virtual void Visit(AbstractVisitor* visitor);
+
+   virtual IExpression* TransformExpression(AbstractExpressionTransformer* transformer);
 };
 
 class And : public BinaryOperation {
@@ -186,6 +208,8 @@ public:
    virtual std::string GetSymbol();
 
    virtual void Visit(AbstractVisitor* visitor);
+
+   virtual IExpression* TransformExpression(AbstractExpressionTransformer* transformer);
 };
 
 class Or : public BinaryOperation {
@@ -197,6 +221,8 @@ public:
    virtual std::string GetSymbol();
 
    virtual void Visit(AbstractVisitor* visitor);
+
+   virtual IExpression* TransformExpression(AbstractExpressionTransformer* transformer);
 };
 
 #endif

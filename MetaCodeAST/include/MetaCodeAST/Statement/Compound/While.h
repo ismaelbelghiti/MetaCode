@@ -15,6 +15,8 @@ public:
 
    virtual void Visit(AbstractVisitor* visitor);
 
+   virtual IStatement* TransformStatement(AbstractStatementTransformer* transformer);
+
 private:
    IExpression *m_condExpr;
    IBloc* m_bloc;

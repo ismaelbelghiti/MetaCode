@@ -13,6 +13,8 @@ public:
 
    virtual void Visit(AbstractVisitor* visitor);
 
+   virtual IStatement* TransformStatement(AbstractStatementTransformer* transformer);
+
 private:
    IBloc* m_bloc;
 };

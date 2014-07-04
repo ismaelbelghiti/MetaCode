@@ -7,9 +7,10 @@ class Printable : public IPrintable {
 public:
    virtual bool isExpression() = 0;
 
-   virtual std::string GetString();
+   virtual std::string GetString() = 0;
 
-   virtual IExpression* GetExpression();
+   virtual IExpression* GetExpression() = 0;
+
 };
 
 class PrintableFromString : public IPrintable {
@@ -20,9 +21,13 @@ public:
 
    virtual std::string GetString();
 
+   virtual IExpression* GetExpression();
+
    virtual void PrintDebug(int level = 0);
 
    virtual void Visit(AbstractVisitor* visitor);
+
+   virtual IPrintable* TransformPrintable(AbstractPrintableTransformer* transformer);
 
 private:
    std::string m_text;
@@ -34,11 +39,15 @@ public:
 
    virtual bool isExpression();
 
+   virtual std::string GetString();
+
    virtual IExpression* GetExpression();
 
    virtual void PrintDebug(int level = 0);
 
    virtual void Visit(AbstractVisitor* visitor);
+
+   virtual IPrintable* TransformPrintable(AbstractPrintableTransformer* transformer);
 
 private:
    IExpression* m_expr;
@@ -60,6 +69,8 @@ public:
    virtual void PrintDebug(int level = 0);
 
    virtual void Visit(AbstractVisitor* visitor);
+
+   virtual IStatement* TransformStatement(AbstractStatementTransformer* transformer);
 
 private:
    int m_nbPrintables;

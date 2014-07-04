@@ -1,5 +1,6 @@
 #include "MetaCodeAST/Statement/Compound/Function.h"
 #include "MetaCodeAST/AbstractVisitor.h"
+#include "MetaCodeAST/Statement/AbstractStatementTransformer.h"
 #include "MetaCodeAST/Utilities/indentation_space.h"
    
 FunctionDeclaration::FunctionDeclaration(IVariable* var, IVariable** arg, int nbArgs,  IBloc* bloc) {
@@ -44,4 +45,7 @@ void FunctionDeclaration::Visit(AbstractVisitor* visitor) {
    visitor->VisitFunctionDeclaration(this);
 }
 
+IStatement* FunctionDeclaration::TransformStatement(AbstractStatementTransformer* transformer) {
+   return transformer->TransformFunctionDeclaration(this);
+}
 

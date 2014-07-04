@@ -19,6 +19,8 @@ public:
 
    virtual void Visit(AbstractVisitor* visitor);
 
+   virtual IStatement* TransformStatement(AbstractStatementTransformer* transformer);
+
 private:
    IVariable *m_var;
    IVariable** m_arg;

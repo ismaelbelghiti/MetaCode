@@ -1,5 +1,6 @@
 #include "MetaCodeAST/Statement/Compound/Conditional.h"
 #include "MetaCodeAST/AbstractVisitor.h"
+#include "MetaCodeAST/Statement/AbstractStatementTransformer.h"
 #include "MetaCodeAST/Utilities/indentation_space.h"
 
 If::If(IExpression *condExpr, IBloc* bloc) {
@@ -27,6 +28,11 @@ void If::Visit(AbstractVisitor* visitor) {
    visitor->VisitIf(this);
 }
 
+IStatement* If::TransformStatement(AbstractStatementTransformer* transformer) {
+   return transformer->TransformIf(this);
+}
+
+
 ElseIf::ElseIf(IExpression *condExpr, IBloc* bloc) {
    m_condExpr = condExpr;
    m_bloc = bloc;
@@ -52,6 +58,11 @@ void ElseIf::Visit(AbstractVisitor* visitor) {
    visitor->VisitElseIf(this);
 }
 
+IStatement* ElseIf::TransformStatement(AbstractStatementTransformer* transformer) {
+   return transformer->TransformElseIf(this);
+}
+
+
 Else::Else(IBloc* bloc) {}
 
 IBloc* Else::GetBloc() {
@@ -66,4 +77,8 @@ void Else::PrintDebug(int level) {
 
 void Else::Visit(AbstractVisitor* visitor) {
    visitor->VisitElse(this);
+}
+
+IStatement* Else::TransformStatement(AbstractStatementTransformer* transformer) {
+   return transformer->TransformElse(this);
 }

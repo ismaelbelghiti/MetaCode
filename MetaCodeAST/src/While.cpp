@@ -1,5 +1,6 @@
 #include "MetaCodeAST/Statement/Compound/While.h"
 #include "MetaCodeAST/AbstractVisitor.h"
+#include "MetaCodeAST/Statement/AbstractStatementTransformer.h"
 #include "MetaCodeAST/Utilities/indentation_space.h"
 
 While::While(IExpression *condExpr, IBloc* bloc) {
@@ -23,3 +24,6 @@ void While::Visit(AbstractVisitor* visitor) {
    visitor->VisitWhile(this);
 }
 
+IStatement* While::TransformStatement(AbstractStatementTransformer* transformer) {
+   return transformer->TransformWhile(this);
+}

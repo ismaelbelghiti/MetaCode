@@ -15,6 +15,8 @@ public:
 
    virtual void Visit(AbstractVisitor* visitor);
 
+   virtual IVariable* TransformVariable(AbstractVariableTransformer* transformer);
+
 private:
    std::string m_name;
    IType* m_type;

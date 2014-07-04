@@ -1,6 +1,8 @@
 #include "MetaCodeAST/Expression/Expression.h"
 #include "MetaCodeAST/AbstractVisitor.h"
+#include "MetaCodeAST/Expression/AbstractExpressionTransformer.h"
 #include "MetaCodeAST/Utilities/indentation_space.h"
+
 ExprFromInt::ExprFromInt(int value) {
    m_value = value;
 }
@@ -22,6 +24,9 @@ void ExprFromInt::Visit(AbstractVisitor* visitor) {
    visitor->VisitExprFromInt(this);
 }
 
+IExpression* ExprFromInt::TransformExpression(AbstractExpressionTransformer* transformer) {
+   return transformer->TransformExprFromInt(this);
+}
 
 ExprFromBool::ExprFromBool(bool value) {
    m_value = value;
@@ -47,6 +52,10 @@ void ExprFromBool::Visit(AbstractVisitor* visitor) {
    visitor->VisitExprFromBool(this);
 }
 
+IExpression* ExprFromBool::TransformExpression(AbstractExpressionTransformer* transformer) {
+   return transformer->TransformExprFromBool(this);
+}
+
 
 ExprFromVariable::ExprFromVariable(IVariable* variable) {
    m_variable = variable;
@@ -67,6 +76,10 @@ void ExprFromVariable::PrintDebug(int level) {
 
 void ExprFromVariable::Visit(AbstractVisitor* visitor) {
    visitor->VisitExprFromVariable(this);
+}
+
+IExpression* ExprFromVariable::TransformExpression(AbstractExpressionTransformer* transformer) {
+   return transformer->TransformExprFromVariable(this);
 }
 
 /////////////////////
@@ -100,6 +113,9 @@ void ParenthesizedExpr::Visit(AbstractVisitor* visitor) {
    visitor->VisitParenthesizedExpr(this);
 }
 
+IExpression* ParenthesizedExpr::TransformExpression(AbstractExpressionTransformer* transformer) {
+      return transformer->TransformParenthesizedExpr(this);
+}
 
 Minus::Minus(IExpression* expr) : UnaryOperation(expr) {}
 
@@ -117,6 +133,10 @@ void Minus::Visit(AbstractVisitor* visitor) {
    visitor->VisitMinus(this);
 }
    
+IExpression* Minus::TransformExpression(AbstractExpressionTransformer* transformer) {
+   return transformer->TransformMinus(this);
+}
+
 
 Negation::Negation(IExpression* expr) : UnaryOperation(expr) {}
 
@@ -134,6 +154,9 @@ void Negation::Visit(AbstractVisitor* visitor) {
    visitor->VisitNegation(this);
 }
   
+IExpression* Negation::TransformExpression(AbstractExpressionTransformer* transformer) {
+   return transformer->TransformNegation(this);
+}
 
 //////////////////////
 // Binary Operation //
@@ -175,6 +198,11 @@ void Addition::Visit(AbstractVisitor* visitor) {
 }
 
 
+IExpression* Addition::TransformExpression(AbstractExpressionTransformer* transformer) {
+   return transformer->TransformAddition(this);
+}
+
+
 Multiplication::Multiplication(IExpression* leftExpr, IExpression* rightExpr) 
    : BinaryOperation(leftExpr,rightExpr) {}
 
@@ -188,6 +216,10 @@ std::string Multiplication::GetSymbol() {
 
 void Multiplication::Visit(AbstractVisitor* visitor) {
    visitor->VisitMultiplication(this);
+}
+
+IExpression* Multiplication::TransformExpression(AbstractExpressionTransformer* transformer) {
+   return transformer->TransformMultiplication(this);
 }
 
 Substraction::Substraction(IExpression* leftExpr, IExpression* rightExpr) 
@@ -205,6 +237,9 @@ void Substraction::Visit(AbstractVisitor* visitor) {
    visitor->VisitSubstraction(this);
 }
 
+IExpression* Substraction::TransformExpression(AbstractExpressionTransformer* transformer) {
+   return transformer->TransformSubstraction(this);
+}
 
 EuclidianDivision::EuclidianDivision(IExpression* leftExpr, IExpression* rightExpr) 
    : BinaryOperation(leftExpr,rightExpr) {}
@@ -222,6 +257,10 @@ void EuclidianDivision::Visit(AbstractVisitor* visitor) {
 }
 
 
+IExpression* EuclidianDivision::TransformExpression(AbstractExpressionTransformer* transformer) {
+   return transformer->TransformEuclidianDivision(this);
+}
+
 Modulus::Modulus(IExpression* leftExpr, IExpression* rightExpr) 
    : BinaryOperation(leftExpr,rightExpr) {}
 
@@ -237,6 +276,10 @@ void Modulus::Visit(AbstractVisitor* visitor) {
    visitor->VisitModulus(this);
 }
 
+IExpression* Modulus::TransformExpression(AbstractExpressionTransformer* transformer) {
+   return transformer->TransformModulus(this);
+}
+
 
 And::And(IExpression* leftExpr, IExpression* rightExpr) 
    : BinaryOperation(leftExpr,rightExpr) {}
@@ -249,6 +292,9 @@ void And::Visit(AbstractVisitor* visitor) {
    visitor->VisitAnd(this);
 }
 
+IExpression* And::TransformExpression(AbstractExpressionTransformer* transformer) {
+   return transformer->TransformAnd(this);
+}
 
 Or::Or(IExpression* leftExpr, IExpression* rightExpr) 
    : BinaryOperation(leftExpr,rightExpr) {}
@@ -259,4 +305,8 @@ std::string Or::GetSymbol() { return "||"; }
 
 void Or::Visit(AbstractVisitor* visitor) {
    visitor->VisitOr(this);
+}
+
+IExpression* Or::TransformExpression(AbstractExpressionTransformer* transformer) {
+   return transformer->TransformOr(this);
 }

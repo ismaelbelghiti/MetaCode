@@ -15,13 +15,14 @@ public:
 
    virtual void Visit(AbstractVisitor* visitor);
 
+   virtual IType* TransformType(AbstractTypeTransformer* transformer); 
+
 private:
    std::string m_typeName;
 };
 
-extern IType *cInt;
-extern IType *cBool;
-extern IType *cVoid;
-
+extern Type* cInt;
+extern Type* cBool;
+extern Type* cVoid;
 
 #endif

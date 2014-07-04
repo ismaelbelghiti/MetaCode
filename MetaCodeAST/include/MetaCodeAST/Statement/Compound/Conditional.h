@@ -15,6 +15,8 @@ public:
 
    virtual void Visit(AbstractVisitor* visitor);
 
+   virtual IStatement* TransformStatement(AbstractStatementTransformer* transformer);
+
 private:
    IExpression *m_condExpr;
    IBloc* m_bloc;
@@ -33,6 +35,8 @@ public:
 
    virtual void Visit(AbstractVisitor* visitor);
 
+   virtual IStatement* TransformStatement(AbstractStatementTransformer* transformer);
+
 private:
    IExpression *m_condExpr;
    IBloc* m_bloc;
@@ -48,6 +52,8 @@ public:
    virtual void PrintDebug(int level = 0);
 
    virtual void Visit(AbstractVisitor* visitor);
+
+   virtual IStatement* TransformStatement(AbstractStatementTransformer* transformer);
 
 private:
    IExpression *m_condExpr;

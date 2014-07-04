@@ -19,9 +19,9 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 
 link_directories(${CMAKE_BINARY_DIR}/lib)
 
-#add_executable(basic_example1 examples/basic_example1.cpp)
+add_executable(basic_example1 examples/basic_example1.cpp)
 
-#target_link_libraries(basic_example1 metacodeast)
+target_link_libraries(basic_example1 metacodeast)
 
 add_executable(test examples/test.cpp)
 

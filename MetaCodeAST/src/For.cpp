@@ -1,6 +1,8 @@
 #include "MetaCodeAST/Statement/Compound/For.h"
 #include "MetaCodeAST/AbstractVisitor.h"
+#include "MetaCodeAST/Statement/AbstractStatementTransformer.h"
 #include "MetaCodeAST/Utilities/indentation_space.h"
+
 Range::Range(bool isIncreasing, IExpression* start, IExpression* excludedEnd, IExpression* includedEnd) {
    m_isIncreasing = isIncreasing;
    m_start = start;
@@ -42,6 +44,7 @@ void Range::Visit(AbstractVisitor* visitor) {
 }
 
 
+
 For::For(IVariable* variable, IRange* range, IBloc* bloc) {
    m_variable = variable;
    m_range = range;
@@ -73,3 +76,6 @@ void For::Visit(AbstractVisitor* visitor) {
    visitor->VisitFor(this);
 }
 
+IStatement* For::TransformStatement(AbstractStatementTransformer* transformer) {
+   return transformer->TransformFor(this);
+}

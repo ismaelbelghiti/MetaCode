@@ -9,26 +9,22 @@ class AbstractTypeTransformer;
 class AbstractVariableTransformer;
 class AbstractExpressionTransformer;
 class AbstractStatementTransformer;
-class AbstractBlocTransformer;
-class AbstractRangeTransformer;
 class AbstractPrintableTransformer;
-class AbstractSignatureTransformer;
-
 
 class IType {
 public:
-   virtual std::string GetName();
+   virtual std::string GetName() = 0;
 
    virtual void PrintDebug(int level = 0) = 0;
 
    virtual void Visit(AbstractVisitor* visitor) = 0;
    
-   //virtual IType* TransformType(AbstractTypeTransformer* transformer) = 0;
+   virtual IType* TransformType(AbstractTypeTransformer* transformer) = 0;
 };
 
 class IVariable {
 public:
-   virtual IType* GetType();
+   virtual IType* GetType() = 0;
 
    virtual std::string GetName() = 0;
 
@@ -36,28 +32,31 @@ public:
 
    virtual void Visit(AbstractVisitor* visitor) = 0;
 
-   //virtual IVariable* TransformVariable(AbstractVariableTransformer* transformer) = 0;
+   virtual IVariable* TransformVariable(AbstractVariableTransformer* transformer) = 0;
 };
 
 class IExpression {
 public:
-   virtual IType* GetType();
+   virtual IType* GetType() = 0;
    
-   virtual void PrintDebug(int level = 0);
+   virtual void PrintDebug(int level = 0) = 0;
 
    virtual void Visit(AbstractVisitor* visitor) = 0;  
 
-   //virtual IExpression* TransformExpression(AbstractExpressionTransformer* transformer) = 0;
+   virtual IExpression* TransformExpression(AbstractExpressionTransformer* transformer) = 0;
 };
 
 class IStatement {
 public:
-   virtual void PrintDebug(int level = 0);
+   virtual void PrintDebug(int level = 0) = 0;
 
    virtual void Visit(AbstractVisitor* visitor) = 0;
 
-   //virtual IStatement* TransformStatement(AbstractStatementTransformer* transformer) = 0;
+   virtual IStatement* TransformStatement(AbstractStatementTransformer* transformer) = 0;
 };
+
+
+// Intermediates Constructions
 
 class IBloc {
 public:
@@ -68,8 +67,6 @@ public:
    virtual void PrintDebug(int level = 0) = 0;
 
    virtual void Visit(AbstractVisitor* visitor) = 0;
-
-   //virtual IBloc* TransforBloc(AbstractBlocTransformer* transformer) = 0;
 };
 
 class IRange {
@@ -87,8 +84,6 @@ public:
    virtual void PrintDebug(int level = 0) = 0;
 
    virtual void Visit(AbstractVisitor* visitor) = 0;
-
-   //virtual IRange* TransformRange(AbstractRangeTransformer* transformer) = 0;
 };
 
 class IPrintable {
@@ -103,20 +98,7 @@ public:
 
    virtual void Visit(AbstractVisitor* visitor) = 0;
 
-   //virtual IPrintable* TransformPrintable(AbstractPrintableTransformer* transformer) = 0;
-};
-
-class ISignature {
-public:
-   virtual int GetNbArgs() = 0;
-
-   virtual IVariable* GetArg(int iArg) = 0;
-   
-   virtual void PrintDebug(int level = 0);
-
-   virtual void Visit(AbstractVisitor* visitor) = 0;
-
-   //virtual ISignature* TransformSignature(AbstractSignatureTransformer* transformer) = 0;
+   virtual IPrintable* TransformPrintable(AbstractPrintableTransformer* transformer) = 0;
 };
 
 

@@ -1,5 +1,5 @@
-#ifndef UTILS_H
-#define UTILS_H
+#ifndef META_CODE_AST_UTILS_H
+#define META_CODE_AST_UTILS_H
 
 #include "MetaCodeAST.h"
 
@@ -20,25 +20,17 @@ void fill_array_from_args(Q** array, T* head, Args... args) {
 template<typename ...Args>
 Bloc* create_bloc(Args... args) {
    int nb = count_args(args...);
-   CodeNode** codeNode = new CodeNode*[nb];
-   fill_array_from_args(codeNode, args...);
-   return new Bloc(codeNode, nb);
+   IStatement** statement = new IStatement*[nb];
+   fill_array_from_args(statement, args...);
+   return new Bloc(statement, nb);
 }
 
 template<typename ...Args>
 Print* create_print(bool withEndline, Args... args) {
    int nb = count_args(args...);
-   Printable** printable = new Printable*[nb];
+   IPrintable** printable = new IPrintable*[nb];
    fill_array_from_args(printable, args...);
    return new Print(printable, nb, withEndline);
-}
-
-template<typename ...Args>
-Signature* create_signature(Args... args) {
-   int nb = count_args(args...);
-   Variable** variable = new Variable*[nb];
-   fill_array_from_args(variable, args...);
-   return new Signature(variable, nb);
 }
 
 

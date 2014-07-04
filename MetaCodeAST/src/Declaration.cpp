@@ -1,5 +1,6 @@
 #include "MetaCodeAST/Statement/Instruction/Declaration.h"
 #include "MetaCodeAST/AbstractVisitor.h"
+#include "MetaCodeAST/Statement/AbstractStatementTransformer.h"
 #include "MetaCodeAST/Utilities/indentation_space.h"
 
 Declaration::Declaration(IVariable* variable, IExpression* expr) {     
@@ -27,3 +28,8 @@ void Declaration::PrintDebug(int level) {
 void Declaration::Visit(AbstractVisitor* visitor) {
    visitor->VisitDeclaration(this);
 }
+
+IStatement* Declaration::TransformStatement(AbstractStatementTransformer* transformer) {
+   return transformer->TransformDeclaration(this);
+}
+

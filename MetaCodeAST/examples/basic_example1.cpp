@@ -3,23 +3,24 @@
 
 int main() {
    // an example of composed airthmetic expression
-   Expression* arithExpr = new Multiplication(
+   IExpression* arithExpr = new Multiplication(
       new ParenthesizedExpr(
 	 new Substraction(
-	    new ExprFromVariable(new Variable("x")),
+	    new ExprFromVariable(new Variable("x",cInt)),
 	    new ExprFromInt(3)
 	 )
       ),
       new ParenthesizedExpr(
 	 new Addition(
-	    new ExprFromVariable(new Variable("y")),
+	    new ExprFromVariable(new Variable("y",cInt)),
 	    new ExprFromInt(3)
 	 )
       )
    );
 
+
    //an example of composed boolean expression
-   Expression* boolExpr = new And(
+   IExpression* boolExpr = new And(
       new ExprFromBool(true),
       new Negation( 
 	 new ParenthesizedExpr(
@@ -40,13 +41,13 @@ int main() {
 
    // creation of a bloc
    Bloc* bloc = create_bloc(
-      new Declaration( new Variable("iLine"), arithExpr),
+      new Declaration( new Variable("iLine",cInt), arithExpr),
       print
    );
    
    // creation of a for loop
    For* forLoop = new For(
-      new Variable("iCow"),
+      new Variable("iCow",cInt),
       new Range(Range::DECREASING, new ExprFromInt(8), new ExprFromInt(2)),
       bloc
    );
@@ -62,7 +63,7 @@ int main() {
       boolExpr,
       bloc
    );
-
+   
    // creation of a function declaration
    
 
