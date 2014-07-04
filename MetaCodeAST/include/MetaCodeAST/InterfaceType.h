@@ -58,6 +58,7 @@ public:
 
 
 
+
 // Intermediates Constructions, used for convenience
 
 class IBloc {
@@ -94,7 +95,6 @@ public:
 
    virtual void PrintDebug(int level = 0) = 0;
 };
-
 
 
 #endif 
