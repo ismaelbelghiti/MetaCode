@@ -26,13 +26,6 @@ void PrintableFromString::PrintDebug(int level) {
    std::cout << "\""  << GetString() << "\"";
 }
 
-void PrintableFromString::Visit(AbstractVisitor* visitor) {
-   visitor->VisitPrintableFromString(this);
-}
-
-IPrintable* PrintableFromString::TransformPrintable(AbstractPrintableTransformer* transformer) {
-   return transformer->TransformPrintableFromString(this);
-}
 
 PrintableFromExpression::PrintableFromExpression(IExpression *expr) {
    m_expr = expr;
@@ -53,14 +46,6 @@ IExpression* PrintableFromExpression::GetExpression() {
 
 void PrintableFromExpression::PrintDebug(int level) {
    GetExpression()->PrintDebug(level);
-}
-
-void PrintableFromExpression::Visit(AbstractVisitor* visitor) {
-   visitor->VisitPrintableFromExpression(this);
-}
-
-IPrintable* PrintableFromExpression::TransformPrintable(AbstractPrintableTransformer* transformer) {
-   return transformer->TransformPrintableFromExpression(this);
 }
 
 Print::Print(IPrintable** printable, int nbPrintables, bool withEndline ) {

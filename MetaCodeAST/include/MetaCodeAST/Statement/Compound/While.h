@@ -3,6 +3,7 @@
 
 #include "MetaCodeAST/InterfaceType.h"
 
+
 class While : public IStatement {
 public:
    While(IExpression *condExpr, IBloc* bloc);

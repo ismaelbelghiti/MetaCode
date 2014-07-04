@@ -9,7 +9,8 @@ class AbstractTypeTransformer;
 class AbstractVariableTransformer;
 class AbstractExpressionTransformer;
 class AbstractStatementTransformer;
-class AbstractPrintableTransformer;
+
+// Constructions
 
 class IType {
 public:
@@ -56,7 +57,8 @@ public:
 };
 
 
-// Intermediates Constructions
+
+// Intermediates Constructions, used for convenience
 
 class IBloc {
 public:
@@ -65,8 +67,6 @@ public:
    virtual IStatement* GetStatement(int iStatement) = 0;
 
    virtual void PrintDebug(int level = 0) = 0;
-
-   virtual void Visit(AbstractVisitor* visitor) = 0;
 };
 
 class IRange {
@@ -82,8 +82,6 @@ public:
    virtual IExpression* GetIncludedEnd() = 0;
 
    virtual void PrintDebug(int level = 0) = 0;
-
-   virtual void Visit(AbstractVisitor* visitor) = 0;
 };
 
 class IPrintable {
@@ -95,10 +93,6 @@ public:
    virtual IExpression* GetExpression() = 0;
 
    virtual void PrintDebug(int level = 0) = 0;
-
-   virtual void Visit(AbstractVisitor* visitor) = 0;
-
-   virtual IPrintable* TransformPrintable(AbstractPrintableTransformer* transformer) = 0;
 };
 
 

@@ -25,10 +25,6 @@ public:
 
    virtual void PrintDebug(int level = 0);
 
-   virtual void Visit(AbstractVisitor* visitor);
-
-   virtual IPrintable* TransformPrintable(AbstractPrintableTransformer* transformer);
-
 private:
    std::string m_text;
 };
@@ -44,10 +40,6 @@ public:
    virtual IExpression* GetExpression();
 
    virtual void PrintDebug(int level = 0);
-
-   virtual void Visit(AbstractVisitor* visitor);
-
-   virtual IPrintable* TransformPrintable(AbstractPrintableTransformer* transformer);
 
 private:
    IExpression* m_expr;
