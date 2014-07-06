@@ -86,7 +86,7 @@ public:
 
 class IPrintable {
 public:
-   virtual bool isExpression() = 0;
+   virtual bool IsExpression() = 0;
 
    virtual std::string GetString() = 0;
 

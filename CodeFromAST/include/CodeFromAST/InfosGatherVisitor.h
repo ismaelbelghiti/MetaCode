@@ -3,39 +3,11 @@
 
 #include <vector>
 #include <map>
-#include "MetaCodeAST/AbstractVisitor.h"
+#include "MetaCodeAST.h"
 
-class InfosGatherVisitor : public AbstractVisitor {
+class InfosGatherVisitor : public EmptyVisitor {
 public:
-   InfosGatherVisitor(CodeNode* root);
-
-   virtual void VisitExprFromInt(ExprFromInt* exprFromInt);
-
-   virtual void VisitExprFromBool(ExprFromBool* exprFromBool);
-
-   virtual void VisitExprFromVariable(ExprFromVariable* exprFromVariable);
-
-   virtual void VisitParenthesizedExpr(ParenthesizedExpr* parenthesizedExpr);
-
-   virtual void VisitMinus(Minus* minus);
-
-   virtual void VisitNegation(Negation* negation);
-
-   virtual void VisitAddition(Addition * addition);
-
-   virtual void VisitMultiplication(Multiplication * multiplication);
-
-   virtual void VisitSubstraction(Substraction * substraction);
-
-   virtual void VisitEuclidianDivision(EuclidianDivision * euclDiv);
-
-   virtual void VisitModulus(Modulus * modulus);
-
-   virtual void VisitAnd(And * andNode);
-
-   virtual void VisitOr(Or * orNode);
-
-   virtual void VisitBloc(Bloc* bloc);
+   InfosGatherVisitor(IStatement* root);
 
    virtual void VisitIf(If * ifNode);
 
@@ -45,15 +17,9 @@ public:
 
    virtual void VisitDeclaration(Declaration * decl);
 
-   virtual void VisitRange(Range * range);
-
    virtual void VisitFor(For * forNode);
 
-   virtual void VisitFunction(Function * function);
-
-   virtual void VisitSignature(Signature * signature);
-
-   virtual void VisitFunctionDeclaration(FunctionDeclaration * functionDecl);
+   virtual void VisitFunctionDecaration(FunctionDeclaration * functionDecl);
 
    virtual void VisitIncludeLib(IncludeLib* includeLib);
 
@@ -63,27 +29,22 @@ public:
 
    virtual void VisitPrint(Print * print);
 
-   virtual void VisitType(Type * type);
-
-   virtual void VisitVariable(Variable* variable);
-
    virtual void VisitWhile(While* whileNode);
    
    virtual void VisitMain(Main* mainNode);
 
-
-   virtual int GetIndentLevel(CodeNode* codeNode);
+   virtual int GetIndentLevel(IStatement* statement);
 
 private:
-   virtual void VisitBinaryOperation(BinaryOperation* binOp);
+   virtual void VisitBloc(IBloc* bloc, int currentLevel);
 
    virtual int GetCurrentLevel();
 
-   virtual void Call(CodeNode* codeNode, int indentLevel);
+   virtual void Call(IStatement* statement, int indentLevel);
 
-   std::vector<CodeNode*> m_activeParent;
+   std::vector<IStatement*> m_activeParent;
    std::vector<int> m_callIndentLevel;
-   std::map<CodeNode*,int> m_indentLevel;
+   std::map<IStatement*,int> m_indentLevel;
 };
 
 #endif

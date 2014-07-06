@@ -1,7 +1,7 @@
 #include "CodeFromAST/PseudoCodePrinterVisitor.h"
 #include "CodeFromAST/CLikePrinterVisitor.h"
 #include "CodeFromAST/InfosGatherVisitor.h"
-#include "CodeFromAST/CodeExpander.h"
+
 
 // Some Utilities
 int count_args() { return 0; }
@@ -21,49 +21,43 @@ void fill_array_from_args(Q** array, T* head, Args... args) {
 template<typename ...Args>
 Bloc* create_bloc(Args... args) {
    int nb = count_args(args...);
-   CodeNode** codeNode = new CodeNode*[nb];
-   fill_array_from_args(codeNode, args...);
-   return new Bloc(codeNode, nb);
+   IStatement** statement = new IStatement*[nb];
+   fill_array_from_args(statement, args...);
+   return new Bloc(statement, nb);
 }
 
 template<typename ...Args>
 Print* create_print(bool withEndline, Args... args) {
    int nb = count_args(args...);
-   Printable** printable = new Printable*[nb];
+   IPrintable** printable = new IPrintable*[nb];
    fill_array_from_args(printable, args...);
    return new Print(printable, nb, withEndline);
 }
 
-template<typename ...Args>
-Signature* create_signature(Args... args) {
-   int nb = count_args(args...);
-   Variable** variable = new Variable*[nb];
-   fill_array_from_args(variable, args...);
-   return new Signature(variable, nb);
-}
+
 // End Utilities
 
 
 int main()
 {
    // an example of composed airthmetic expression
-   Expression* arithExpr = new Multiplication(
+   IExpression* arithExpr = new Multiplication(
       new ParenthesizedExpr(
 	 new Substraction(
-	    new ExprFromVariable(new Variable("x")),
+	    new ExprFromVariable(new Variable("x",cInt)),
 	    new ExprFromInt(3)
 	 )
       ),
       new ParenthesizedExpr(
 	 new Addition(
-	    new ExprFromVariable(new Variable("y")),
+	    new ExprFromVariable(new Variable("y",cInt)),
 	    new ExprFromInt(3)
 	 )
       )
    );
 
    //an example of composed boolean expression
-   Expression* boolExpr = new And(
+   IExpression* boolExpr = new And(
       new ExprFromBool(true),
       new Negation( 
 	 new ParenthesizedExpr(
@@ -84,13 +78,13 @@ int main()
 
    // creation of a bloc
    Bloc* bloc = create_bloc(
-      new Declaration( new Variable("iLine"), arithExpr),
+      new Declaration( new Variable("iLine",cInt), arithExpr),
       print
    );
    
    // creation of a for loop
    For* forLoop = new For(
-      new Variable("iCow"),
+      new Variable("iCow",cInt),
       new Range(Range::DECREASING, new ExprFromInt(8), new ExprFromInt(2)),
       bloc
    );
@@ -101,7 +95,7 @@ int main()
       bloc
    );
 
-   // creation of an if statement
+   // creation of an if statementn
    If* ifStatement = new If(
       boolExpr,
       bloc
@@ -114,22 +108,22 @@ int main()
       ifStatement
    );
 
+   If* ifStatement2 = new If(
+      boolExpr,
+      bloc2
+   );
+   
+
    std::cout << "PseudoCode : " << std::endl;
-   AbstractVisitor* pseudoCodeVisitor = new PseudoCodePrinterVisitor(bloc2);
-   bloc2->Visit(pseudoCodeVisitor);
+   AbstractVisitor* pseudoCodeVisitor = new PseudoCodePrinterVisitor(ifStatement2);
+   ifStatement2->Visit(pseudoCodeVisitor);
    std::cout << std::endl;
+
 
    std::cout << "C:" << std::endl;
-   AbstractVisitor* cVisitor = new CLikePrinterVisitor(CLikePrinterVisitor::C,bloc2);
-   bloc2->Visit(cVisitor);
+   AbstractVisitor* cVisitor = new CLikePrinterVisitor(CLikePrinterVisitor::C,ifStatement2);
+   ifStatement2->Visit(cVisitor);
    std::cout << std::endl;
-
-
-   CodeExpander* codeExpander = new CodeExpander();
-   codeExpander->ExpandCodeNode(bloc2)->Visit(pseudoCodeVisitor);
-   //std::cout << "Indent Level:" << std::endl;
-   //AbstractVisitor* info = new InfosGatherVisitor(bloc2);
-   //std::cout << std::endl;
 
 
    return 0;

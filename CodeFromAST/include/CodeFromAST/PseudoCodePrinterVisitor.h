@@ -1,12 +1,12 @@
 #ifndef PSEUDOCODE_PRINTER_VISITOR_H
 #define PSEUDOCODE_PRINTER_VISITOR_H
 
-#include "MetaCodeAST/AbstractVisitor.h"
+#include "MetaCodeAST.h"
 #include "CodeFromAST/InfosGatherVisitor.h"
 
 class PseudoCodePrinterVisitor : public AbstractVisitor {
 public:
-   PseudoCodePrinterVisitor(CodeNode* root);
+   PseudoCodePrinterVisitor(IStatement* root);
    
    virtual void VisitExprFromInt(ExprFromInt* exprFromInt);
 
@@ -34,8 +34,6 @@ public:
 
    virtual void VisitOr(Or * orNode);
 
-   virtual void VisitBloc(Bloc* bloc);
-
    virtual void VisitIf(If * ifNode);
 
    virtual void VisitElseIf(ElseIf * elseIfNode);
@@ -44,21 +42,11 @@ public:
 
    virtual void VisitDeclaration(Declaration * decl);
 
-   virtual void VisitRange(Range * range);
-
    virtual void VisitFor(For * forNode);
-
-   virtual void VisitFunction(Function * function);
-
-   virtual void VisitSignature(Signature * signature);
 
    virtual void VisitFunctionDeclaration(FunctionDeclaration * functionDecl);
 
    virtual void VisitIncludeLib(IncludeLib* includeLib);
-
-   virtual void VisitPrintableFromString(PrintableFromString * printStr);
-
-   virtual void VisitPrintableFromExpression(PrintableFromExpression * printExpr);
 
    virtual void VisitPrint(Print * print);
 
@@ -70,10 +58,12 @@ public:
    
    virtual void VisitMain(Main* mainNode);
 
-   virtual int GetIndentLevel(CodeNode* codeNode);
-
 private:
+   virtual void VisitBloc(IBloc* bloc);
+
    virtual void VisitBinaryOperation(BinaryOperation* binOp, std::string opString);
+   
+   virtual int GetIndentLevel(IStatement* statement);
 
    InfosGatherVisitor* m_info;
 };

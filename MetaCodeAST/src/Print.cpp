@@ -5,7 +5,7 @@ PrintableFromString::PrintableFromString(std::string text) {
    m_text = text; 
 }
 
-bool PrintableFromString::isExpression() { 
+bool PrintableFromString::IsExpression() { 
    return false; 
 }
 
@@ -27,7 +27,7 @@ PrintableFromExpression::PrintableFromExpression(IExpression *expr) {
    m_expr = expr;
 }
 
-bool PrintableFromExpression::isExpression() { 
+bool PrintableFromExpression::IsExpression() { 
    return true; 
 }
 

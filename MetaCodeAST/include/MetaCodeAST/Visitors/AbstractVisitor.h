@@ -1,7 +1,7 @@
 #ifndef ABSTRACT_VISITOR_H
 #define ABSTRACT_VISITOR_H
 
-#include "MetaCodeAST.h"
+#include "MetaCodeAST/Constructions.h"
 
 class AbstractTypeVisitor {
 public:

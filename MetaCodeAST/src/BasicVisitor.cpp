@@ -30,19 +30,19 @@ void BasicVisitor::ProcessExprFromVariable(ExprFromVariable* exprFromVariable) {
 
 void BasicVisitor::VisitParenthesizedExpr(ParenthesizedExpr* parenthesizedExpr) {
    ProcessParenthesizedExpr(parenthesizedExpr);
-   parenthesizedExpr->Visit(this);
+   parenthesizedExpr->GetExpression()->Visit(this);
 }
 void BasicVisitor::ProcessParenthesizedExpr(ParenthesizedExpr* parenthesizedExpr) {}
 
 void BasicVisitor::VisitMinus(Minus* minus) {
    ProcessMinus(minus);
-   minus->Visit(this);
+   minus->GetExpression()->Visit(this);
 }
 void BasicVisitor::ProcessMinus(Minus* minus) {}
 
 void BasicVisitor::VisitNegation(Negation* negation) {
    ProcessNegation(negation);
-   negation->Visit(this);
+   negation->GetExpression()->Visit(this);
 }
 void BasicVisitor::ProcessNegation(Negation* negation) {}
 
@@ -112,17 +112,27 @@ void BasicVisitor::ProcessElse(Else * elseNode) {}
 
 void BasicVisitor::VisitDeclaration(Declaration * decl) {
    ProcessDeclaration(decl);
-   decl->Visit(this);
+   decl->GetVariable()->Visit(this);
+   decl->GetExpression()->Visit(this);
 }
 void BasicVisitor::ProcessDeclaration(Declaration * decl) {}   
 
 void BasicVisitor::VisitFor(For * forNode) {
-   // TODO
+   ProcessFor(forNode);
+   forNode->GetVariable()->Visit(this);
+   forNode->GetRange()->GetStart()->Visit(this);
+   if(forNode->GetRange()->IncludedEndIsDefined())
+      forNode->GetRange()->GetIncludedEnd()->Visit(this);
+   else
+      forNode->GetRange()->GetExcludedEnd()->Visit(this);
+   VisitBlocStatements(forNode->GetBloc());
 }
 void BasicVisitor::ProcessFor(For * forNode) {}
 
 void BasicVisitor::VisitFunctionDeclaration(FunctionDeclaration * functionDecl) {
-   // TODO
+   ProcessFunctionDeclaration(functionDecl);
+   functionDecl->GetVariable()->Visit(this);
+   
 }
 void BasicVisitor::ProcessFunctionDeclaration(FunctionDeclaration * functionDecl) {}
 
@@ -145,10 +155,12 @@ void BasicVisitor::VisitMain(Main* mainNode) {
 void BasicVisitor::ProcessMain(Main* mainNode) {}
 
 void BasicVisitor::VisitPrint(Print * print) {
-   // TODO
+   ProcessPrint(print);
+   for(int iPrintable = 0; iPrintable < print->GetNbPrintables(); iPrintable++)
+      if(print->GetPrintable(iPrintable)->IsExpression())
+	 print->GetPrintable(iPrintable)->GetExpression()->Visit(this);
 }
 void BasicVisitor::ProcessPrint(Print * print) {}
-
 
 
 // private:

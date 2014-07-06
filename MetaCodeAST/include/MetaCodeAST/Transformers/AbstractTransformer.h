@@ -1,6 +1,8 @@
 #ifndef ABSTRACT_TRANSFORMER_H
 #define ABSTRACT_TRANSFORMER_H
 
+#include "MetaCodeAST/Constructions.h"
+
 class AbstractTypeTransformer {
 public:
    virtual IType* TransformType(Type* type) = 0;

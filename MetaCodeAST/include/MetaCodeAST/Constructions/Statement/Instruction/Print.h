@@ -5,7 +5,7 @@
 
 class Printable : public IPrintable {
 public:
-   virtual bool isExpression() = 0;
+   virtual bool IsExpression() = 0;
 
    virtual std::string GetString() = 0;
 
@@ -17,7 +17,7 @@ class PrintableFromString : public IPrintable {
 public:
    PrintableFromString(std::string text);
 
-   virtual bool isExpression();
+   virtual bool IsExpression();
 
    virtual std::string GetString();
 
@@ -33,7 +33,7 @@ class PrintableFromExpression : public IPrintable {
 public:
    PrintableFromExpression(IExpression *expr);
 
-   virtual bool isExpression();
+   virtual bool IsExpression();
 
    virtual std::string GetString();
 

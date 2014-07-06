@@ -1,59 +1,84 @@
 #include "CodeFromAST/InfosGatherVisitor.h"
 
-InfosGatherVisitor::InfosGatherVisitor(CodeNode* root) {
+InfosGatherVisitor::InfosGatherVisitor(IStatement* root) {
    Call(root,0);
 }
 
-void InfosGatherVisitor::VisitExprFromInt(ExprFromInt* exprFromInt) {}
-
-void InfosGatherVisitor::VisitExprFromBool(ExprFromBool* exprFromBool) {}
-
-void InfosGatherVisitor::VisitExprFromVariable(ExprFromVariable* exprFromVariable) {}
-
-void InfosGatherVisitor::VisitParenthesizedExpr(ParenthesizedExpr* parenthesizedExpr) {
-   Call(parenthesizedExpr->GetExpression(),0);
+void InfosGatherVisitor::VisitIf(If * ifNode) {
+   VisitBloc(ifNode->GetBloc(),GetCurrentLevel());
 }
 
-void InfosGatherVisitor::VisitMinus(Minus* minus) {
-   Call(minus->GetExpression(),0);
+void InfosGatherVisitor::VisitElseIf(ElseIf * elseIfNode) {
+   VisitBloc(elseIfNode->GetBloc(), GetCurrentLevel());
 }
 
-void InfosGatherVisitor::VisitNegation(Negation* negation) {
-   Call(negation->GetExpression(),0);
+void InfosGatherVisitor::VisitElse(Else * elseNode) {
+   VisitBloc(elseNode->GetBloc(), GetCurrentLevel());
 }
 
-void InfosGatherVisitor::VisitAddition(Addition * addition) {
-   VisitBinaryOperation(addition);
+void InfosGatherVisitor::VisitDeclaration(Declaration * decl) {
+   // do nothing
 }
 
-void InfosGatherVisitor::VisitMultiplication(Multiplication * multiplication) {
-   VisitBinaryOperation(multiplication);
+void InfosGatherVisitor::VisitFor(For * forNode) {
+   VisitBloc(forNode->GetBloc(), GetCurrentLevel());
 }
 
-void InfosGatherVisitor::VisitSubstraction(Substraction * substraction) {
-   VisitBinaryOperation(substraction);
+void InfosGatherVisitor::VisitFunctionDecaration(FunctionDeclaration * functionDecl) {
+   VisitBloc(functionDecl->GetBloc(), GetCurrentLevel());
 }
 
-void InfosGatherVisitor::VisitEuclidianDivision(EuclidianDivision * euclDiv) {
-   VisitBinaryOperation(euclDiv);
+void InfosGatherVisitor::VisitIncludeLib(IncludeLib* includeLib) {
+   // do nothing
 }
 
-void InfosGatherVisitor::VisitModulus(Modulus * modulus) {
-   VisitBinaryOperation(modulus);
+void InfosGatherVisitor::VisitPrintableFromString(PrintableFromString * printStr) {
+   // do nothing
 }
 
-void InfosGatherVisitor::VisitAnd(And * andNode) {
-   VisitBinaryOperation(andNode);
+void InfosGatherVisitor::VisitPrintableFromExpression(PrintableFromExpression * printExpr) {
+   // do nothing
 }
 
-void InfosGatherVisitor::VisitOr(Or * orNode) {
-   VisitBinaryOperation(orNode);
+void InfosGatherVisitor::VisitPrint(Print * print) {
+   // do nothing
 }
 
-void InfosGatherVisitor::VisitBloc(Bloc* bloc) {
-   for(int iCodeNode = 0; iCodeNode < bloc->GetNbCodeNodes(); iCodeNode++) 
-      Call(bloc->GetCodeNode(iCodeNode),GetCurrentLevel()+1);
+void InfosGatherVisitor::VisitWhile(While* whileNode) {
+   VisitBloc(whileNode->GetBloc(), GetCurrentLevel());
 }
+   
+void InfosGatherVisitor::VisitMain(Main* mainNode) {
+   VisitBloc(mainNode->GetBloc(), GetCurrentLevel());
+}
+
+int InfosGatherVisitor::GetIndentLevel(IStatement* statement) {
+   return m_indentLevel[statement];
+}
+
+
+// private:
+
+void InfosGatherVisitor::VisitBloc(IBloc* bloc, int currentLevel) {
+   for(int iStatement = 0; iStatement < bloc->GetNbStatements(); iStatement++) 
+      Call(bloc->GetStatement(iStatement), currentLevel+1);
+}
+
+int InfosGatherVisitor::GetCurrentLevel() {
+   return m_callIndentLevel.back();
+}
+
+void InfosGatherVisitor::Call(IStatement* statement, int indentLevel) {
+   m_indentLevel[statement] = indentLevel; 
+   m_callIndentLevel.push_back(indentLevel);
+   m_activeParent.push_back(statement);
+   statement->Visit(this);
+   m_callIndentLevel.pop_back();
+   m_activeParent.pop_back();
+}
+
+/*
+
 
 void InfosGatherVisitor::VisitIf(If * ifNode) {
    Call(ifNode->GetCondition(),0);
@@ -143,17 +168,5 @@ void InfosGatherVisitor::VisitBinaryOperation(BinaryOperation* binOp) {
    Call(binOp->GetRightExpr(),0);
 }
 
-int InfosGatherVisitor::GetCurrentLevel() {
-   return m_callIndentLevel.back();
-}
 
-void InfosGatherVisitor::Call(CodeNode* codeNode, int indentLevel) {
-   m_indentLevel[codeNode] = indentLevel; 
-   //std::cout << indentLevel << std::endl;
-
-   m_callIndentLevel.push_back(indentLevel);
-   m_activeParent.push_back(codeNode);
-   codeNode->Visit(this);
-   m_callIndentLevel.pop_back();
-   m_activeParent.pop_back();
-}
+*/
