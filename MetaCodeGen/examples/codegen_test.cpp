@@ -3,5 +3,14 @@
 
 int main()
 {
-   std::cout << f() << std::endl;
+   Main* m = MAIN(
+      new IncludeLib("t1"),
+      ELSE(
+	 new IncludeLib("t2")
+      )
+   );
+
+   m->PrintDebug();
+
+   return 0;
 }

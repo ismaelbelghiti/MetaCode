@@ -60,7 +60,7 @@ IStatement* ElseIf::TransformStatement(AbstractStatementTransformer* transformer
 }
 
 
-Else::Else(IBloc* bloc) {}
+Else::Else(IBloc* bloc) { m_bloc = bloc; }
 
 IBloc* Else::GetBloc() {
    return m_bloc;

@@ -20,6 +20,7 @@ void Bloc::PrintDebug(int level) {
       GetStatement(iStatement)->PrintDebug(level+1);
       std::cout << std::endl;
    }
+   printIndent(level);
    std::cout << "}" << std::endl;
 }
 

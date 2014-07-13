@@ -1,6 +1,6 @@
 #include "MetaCodeAST.h"
 
-Main::Main(IBloc* bloc) {}
+Main::Main(IBloc* bloc) { m_bloc = bloc; }
 
 IBloc* Main::GetBloc() { return m_bloc; }
 
