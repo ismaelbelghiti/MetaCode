@@ -4,9 +4,16 @@
 int main()
 {
    Main* m = MAIN(
-      new IncludeLib("t1"),
-      ELSE(
-	 new IncludeLib("t2")
+      WHILE(new ExprFromInt(3)) (
+	 IF(new ExprFromInt(2)) (
+	    new IncludeLib("t1")
+	 ),
+	 ELSE(
+	    new IncludeLib("t2"),
+	    DECR_FOR(new Variable("i",cInt), new ExprFromInt(10), new ExprFromInt(1)) (
+	       new IncludeLib("t3")
+	    )
+         )
       )
    );
 
